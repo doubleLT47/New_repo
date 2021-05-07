@@ -3341,3 +3341,7 @@ a.change-password {
     font-weight: bold;
     color: blue;
   }
+
+  .luan-comment {
+    width:100% !important;
+  }

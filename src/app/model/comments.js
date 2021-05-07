@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 
 const Comments = new Schema({
     content: {type: String, required: true},
-    postId: String,
+    postID: String,
+    userID: String,
     createAt: {type: Date, default: Date.now }
 });
 

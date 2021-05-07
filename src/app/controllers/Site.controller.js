@@ -8,6 +8,13 @@ class Site {
         const user = req.user;
         res.render('home', {user: user.toObject()});
     } 
+
+
+    facultyIndex(req, res) {
+        const user = req.user;
+        res.render('faculty/facultyPage', {user: user.toObject()});
+    } 
+    
     // [GET] edit UserAccount
 
     edit(req, res, next) {

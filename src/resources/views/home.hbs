@@ -117,13 +117,12 @@
     $(document).ready(function() {
         getPosts();
 
-        console.log()
     });
 
     document.addEventListener('DOMContentLoaded', () => {
         let button = document.getElementById('luan-btn');
         let id = button.getAttribute('data-id');
-        const URL = `http://localhost:8080/post/${id}`;
+        const URL = `/post/${id}`;
         button.onclick = (event) => {
             var caption = document.getElementById('post-caption').value;
             var imageFile = document.getElementById('upload-photo').files;
@@ -145,6 +144,7 @@
                 processData: false,
                 success: function (data) {
                     alert(data.message);
+                    getPosts();
                 }
             });
         }
@@ -152,13 +152,12 @@
     });
 
     function getPosts() {
-        const URL = `http://localhost:8080/post/api`;
+        const URL = `/post/api`;
         $.ajax({
             url: URL,
             method: "GET",
             dataType: "json",
             success: function (data) {
-                console.log(data)
                 renderPost(data)
             }
         })
@@ -200,17 +199,19 @@
 
            
             html +=`<div class="collapse" id="luan${post._id}">`
-                html +=`<div class="card card-body mb-0">`
-                    html +=`<div class="pl-2 flex-row">`
-                        html +=`<img class="avatar-comment mt-1 mr-2" src="" alt="">`
-                        html +=`<input type="email" class="form-control rounded  col-11 mt-1" placeholder="Viết bình luận ...">`
-                        
+                html +=`<div class="card card-body mb-0" id="luan-comment">`
+                    html +=`<div class="pl-2 d-flex luan-comment">`
+                        html +=`<img class="avatar-comment mt-1 mr-2" src="${post.userAvatar}" alt="">`
+                        html +=`<input type="text" name="comment" id="cmt${post._id}"  class="form-control rounded  col-lg-11 col-md-10 col-sm-8 mt-1" placeholder="Viết bình luận ...">`
+                        html += `<button type="button" data-user="{{user._id}}" data-id="${post._id}" onclick="sendComment(this)" class="btn btn-light"><i class="far fa-paper-plane"></i></button>`
                     html +=`</div>`
                     html +=`<div class="pl-2 d-flex flex-row  align-items-start mt-2">`
                         html +=`<img class="avatar-comment mt-2 " src="" >`
                         html +=`<div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > `
-                            html +=`<a class="font-weight-bold" href="#"></a>`
-                            html +=`<div >Ay what the fuck lol My idea of 2D + 3D with blocky stuff and cursed high quality graphics is finally here! great job mate </div>`
+                            html +=`<span class="font-weight-bold" href="#">Luaan nguyen </span> <span class="float-right post-date">${moment(post.createAt).fromNow()}</span>`
+                            html +=`<div >`
+                                html+= `Ay what the fuck lol My idea of 2D + 3D with blocky stuff and cursed high quality graphics is finally here! great job mate `
+                            html+= `</div>`
                         html +=`</div>`
                     html +=`</div>`
                 html +=`</div>`
@@ -218,5 +219,39 @@
         })
 
         $('#new-feed').append(html);
+    }
+
+    function sendComment(btn) {
+        let id = btn.getAttribute('data-id');
+        let content = document.getElementById('cmt'+id);
+        let idUser = btn.getAttribute('data-user');
+        console.log(id);
+
+        if (content.value === '') {
+            alert('Bạn chưa bình luận điều gì!');
+        }
+        else  {
+            const URL = `/comment/api`;
+
+            let data = {
+                content: content.value,
+                postID: id,
+                userID: idUser
+            };
+
+            $.ajax({
+                url: URL,
+                method: "POST",
+                data: data,
+                contentType: "application/x-www-form-urlencoded",
+                success: function (cmt) {
+                    alert(cmt.message);
+                    content.value = '';
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
     }
 </script>
