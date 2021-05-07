@@ -3252,3 +3252,92 @@ a.change-password {
   border-radius: 50%;
   float: left;
 }
+/* Faculty list */
+.img-faculty{
+  border: 2px solid #CCC;
+  height: auto;
+  overflow: hidden;
+ position: relative;
+}
+
+
+.img-faculty:hover img {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+.img-faculty:hover span {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+.img-faculty span {
+  transition: all 1s;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.img-faculty img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  transition: all 1s;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.overlay {
+  position: absolute; 
+  bottom: 0; 
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1; 
+  width: 100%;
+  color: white;
+  padding: 1px;
+  height: 25%;
+  text-align: center;
+  z-index: 1;
+  font-size: 13px;
+}
+
+.badge-faculty{
+  z-index: 1;
+  right: 0;
+  height: 30px;
+  padding-top: 8px;
+  border-radius: 50%;
+ font-size: 14px;
+}
+
+ /* datepicker  */
+  #datepicker{
+  width:180px; 
+  margin: 0 20px 20px 20px;
+  }
+  #datepicker > span:hover{
+  cursor: pointer;
+  }
+
+  /* notify all */
+  .notify-block-blue{
+    background-color: #d2f1fa;
+    border-left: 2px solid rgb(97, 96, 96);
+  }
+
+  .notify-block{
+    background-color: whitesmoke;
+    border-left: 2px solid rgb(97, 96, 96);
+  }
+
+  .notify-title{
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .notify-link{
+    font-size: 15px;
+    font-weight: bold;
+    color: blue;
+  }

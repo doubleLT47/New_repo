@@ -6,7 +6,6 @@ const facultyController = require('../app/controllers/Faculty.controller');
 const checkLogin = require('../app/middlewares/CheckLogin');
 const checkFaculty = require('../app/middlewares/CheckFaculty');
 
-router.get('/',checkLogin, checkFaculty, facultyController.index);
-
+router.get('/',checkLogin, facultyController.index);
 
 module.exports = router;

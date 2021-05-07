@@ -1,10 +1,14 @@
 
 
 class Notify {
-    //[GET] /index
-    index(req, res, next) {
-        res.render('profile');
+    index(req,res){
+        return res.render('facultyList');
     }
+
+    viewAllNotify(req,res){
+        return res.render('allNotify');
+    }
+  
     
 }
 
