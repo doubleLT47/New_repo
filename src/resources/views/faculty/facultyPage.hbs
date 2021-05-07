@@ -34,7 +34,7 @@
                         </ul>
                     </div>
                     <!-- End Create Post -->
-                    <div class="card mt-1">
+                    <div class="card mt-1 luan-card">
                         <div class="card-header pb-0">
                             <img class="avatar" src="img/avatar.jpg" alt="">
                             <div class="pl-2 d-flex flex-column">
@@ -59,10 +59,34 @@
                         <hr class="mt-0 mb-1 ">
                         <div class="d-flex post-react justify-content-around ">
                             <button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>
-                            <button class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>
+                            <button  data-toggle="collapse" data-target="#collapseExample"  class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>
                             <button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>
                         </div>
                     </div>
+
+                    {{!--  Comment layout --}}
+                     <div class="collapse" id="collapseExample">
+                    <div class="card card-body mb-0">
+                        <div class="pl-2 flex-row">
+                            <img class="avatar-comment mt-1 mr-2" src="{{user.avatar}}" alt="">
+                            <input type="email" class="form-control rounded  col-11 mt-1" placeholder="Viết bình luận ...">
+                               
+                        </div>
+                            {{!-- Comment has posted --}}
+                         
+
+                        <div class="pl-2 d-flex flex-row  align-items-start mt-2">
+                           <img class="avatar-comment mt-2 " src="{{user.avatar}}" >
+                            <div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > 
+                                <a class="font-weight-bold" href="#">{{user.fullname}}</a>
+                                <div >Ay what the fuck lol
+                                        My idea of 2D + 3D with blocky stuff and cursed high quality graphics is finally here!
+                                        great job mate
+                                </div>
+                            </div>
+                        </div>
+
+                    <!-- End card test -->
 
                 </div>
                 <!-- End Post -->

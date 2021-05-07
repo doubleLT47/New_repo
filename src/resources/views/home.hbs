@@ -33,40 +33,9 @@
                             </li>
                         </ul>
                     </div>
-                    <!-- End Create Post -->
-                    <div class="card mt-1">
-                        <div class="card-header pb-0">
-                            <img class="avatar" src="img/avatar.jpg" alt="">
-                            <div class="pl-2 d-flex flex-column">
-                                <p class="avatar-name"> Lê Thanh Tú</h5>
-                                <p class="p-0 post-date">December 23,2020</p>
-                            </div>
-                        </div>
-                        <div class="card-body pt-0 pb-0">
-                            <blockquote class="blockquote mb-0 ">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-                                    erat a ante.</p>
-                                <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source
-                                        Title</cite></footer>
-                            </blockquote>
-                        </div>
-                        <div class="card-body pt-2 text-muted">
-                            <div class="d-flex ">
-                                <div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>
-                                <div class="ml-auto text-right"> 20 Comments </div>
-                            </div>
-                        </div>
-                        <hr class="mt-0 mb-1 ">
-                        <div class="d-flex post-react justify-content-around ">
-                            <button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>
-                            <button class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>
-                            <button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>
-                        </div>
-                    </div>
-
                     <!-- Card test -->
 
-                    <div class="card mt-1">
+                    <div class="card mt-1 luan-card">
                         <div class="card-header pb-0">
                             <img class="avatar" src="img/avatar.jpg" alt="">
                             <div class="pl-2 d-flex flex-column">
@@ -96,73 +65,27 @@
                         </div>
                     </div>
 
-                                            {{!--  Comment layout --}}
+                    {{!--  Comment layout --}}
                      <div class="collapse" id="collapseExample">
                     <div class="card card-body mb-0">
-                            <div class="pl-2 flex-row">
-                           <img class="avatar-comment mt-1 mr-2" src="{{post.user.avatar}}" alt="">
-                           <input type="email" class="form-control rounded  col-11 mt-1" placeholder="Viết bình luận ...">   
-                            </div>
+                        <div class="pl-2 flex-row">
+                            <img class="avatar-comment mt-1 mr-2" src="{{user.avatar}}" alt="">
+                            <input type="email" class="form-control rounded  col-11 mt-1" placeholder="Viết bình luận ...">
+                               
+                        </div>
                             {{!-- Comment has posted --}}
                          
 
-                             <div class="pl-2 d-flex flex-row  align-items-start mt-2">
-                           <img class="avatar-comment mt-2 " src="{{post.user.avatar}}" >
-                                <div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > 
-                                        <a class="font-weight-bold" href="#"> Nguyễn Trung  </a>
-                                         <div >Ay what the fuck lol
-                                                My idea of 2D + 3D with blocky stuff and cursed high quality graphics is finally here!
-                                                great job mate
-                                         </div>
+                        <div class="pl-2 d-flex flex-row  align-items-start mt-2">
+                           <img class="avatar-comment mt-2 " src="{{user.avatar}}" >
+                            <div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > 
+                                <a class="font-weight-bold" href="#">{{user.fullname}}</a>
+                                <div >Ay what the fuck lol
+                                        My idea of 2D + 3D with blocky stuff and cursed high quality graphics is finally here!
+                                        great job mate
                                 </div>
                             </div>
-
-                    {{!-- <div class="card mt-1">
-                        <div class="card-header pb-0">
-                            <img class="avatar" src="img/avatar.jpg" alt="">
-                            <div class="pl-2 d-flex flex-column">
-                                <p class="avatar-name"> Lê Thanh Tú</h5>
-                                <p class="p-0 post-date">December 23,2020</p>
-                            </div>
                         </div>
-                        <div class="card-body pt-0 pb-0">
-                            <blockquote class="blockquote mb-0 ">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                                    <div class="row">
-                                        <div class="col-sm-6 col-xs-8 p-0">
-                                            <div class="card-body p-1">
-                                                <iframe width="100%"  src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1"></iframe>
-                                            </div>
-                                        </div>
-                                         <div class="col-sm-6 col-xs-8 p-0">
-                                            <div class="card-body p-1">
-                                                <iframe width="100%"  src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1"></iframe>
-                                            </div>
-                                        </div>
-                                         <div class="col-sm-6 col-xs-8 p-0">
-                                            <div class="card-body p-1">
-                                                <iframe width="100%"  src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1"></iframe>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source
-                                        Title</cite></footer>
-                            </blockquote>
-                        </div>
-                        
-                        <div. class="card-body pt-2 text-muted">
-                            <div class="d-flex ">
-                                <div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>
-                                <div class="ml-auto text-right"> 20 Comments </div>
-                            </div>
-                        </div.card-body>
-                        <hr class="mt-0 mb-1 ">
-                        <div class="d-flex post-react justify-content-around ">
-                            <button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>
-                            <button class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>
-                            <button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>
-                        </div>
-                    </div> --}}
 
                     <!-- End card test -->
 
@@ -222,7 +145,7 @@
                         {{!-- <img src="img/dark-souls.jpg" class=" float-right form-control " style="height: auto;"> --}}
 
                     </div>
-                    <input type="file" name="video" id="upload-video">
+                    <input type="text" name="video" id="upload-video">
                     <input type="file" name="image"  accept="image/*" multiple id="upload-photo">
                     <div class="add-to-post mt-3">
                         <button type="button" class="btn btn-light btn-circle float-right" data-toggle="tooltip"
@@ -277,5 +200,4 @@
     
     });
     
-
 </script>
