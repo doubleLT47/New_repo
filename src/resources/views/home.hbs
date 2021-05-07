@@ -170,10 +170,10 @@
         $.each(posts, function(index, post) {
             html += `<div class="card mt-1 luan-card">`
                 html +=`<div class="card-header pb-0">`
-                    html +=`<img class="avatar" src="img/avatar.jpg" alt="">`
+                    html +=`<img class="avatar" src="/${post.userAvatar}" alt="">`
                     html +=`<div class="pl-2 d-flex flex-column">`
-                        html +=`<p class="avatar-name"> Lê Thanh Tú</h5>`
-                        html +=`<p class="p-0 post-date">December 23,2020</p>`
+                        html +=`<p class="avatar-name"> ${post.userName}</h5>`
+                        html +=`<p class="p-0 post-date">${moment(post.createAt).fromNow()}</p>`
                     html += `</div>`
                 html +=`</div>`
                 html +=`<div class="card-body pt-0 pb-0">`
@@ -193,13 +193,13 @@
                 html +=`<hr class="mt-0 mb-1 ">`
                 html +=`<div class="d-flex post-react justify-content-around ">`
                     html +=`<button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>`
-                    html +=`<button  data-toggle="collapse" data-target="#${post._id}"  class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>`
+                    html +=`<button  data-toggle="collapse" data-target="#luan${post._id}"  class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>`
                     html +=`<button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>`
                 html +=`</div>`
             html +=`</div>`
 
            
-            html +=`<div class="collapse" id="${post._id}">`
+            html +=`<div class="collapse" id="luan${post._id}">`
                 html +=`<div class="card card-body mb-0">`
                     html +=`<div class="pl-2 flex-row">`
                         html +=`<img class="avatar-comment mt-1 mr-2" src="" alt="">`
