@@ -11,7 +11,7 @@ class Comment {
         let newComment = new commentModel(req.body);
         newComment.save()
             .then(() =>{
-                res.status(200).json({message: 'Viết bài thành công', newPost: newPost});
+                res.status(200).json({message: 'Bình luận đã được gửi đến chính chủ thành công', newPost: newPost});
             })
             .catch(err =>{
                 
@@ -19,11 +19,12 @@ class Comment {
     }
 
     showListComment(req, res, next) {
+        console.log(req.params.id);
         commentModel.find({postID: req.params.id})
             .then(comments => {
                 let data = [];
                 let i = comments.length;
-                posts.map(async (cmt, index) => {
+                comments.map(async (cmt, index) => {
                     let acc = await UserAccount.findOne({_id: cmt.userID});
                     
                     let {_id, content,postID, userID} = cmt;
