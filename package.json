@@ -1,0 +1,44 @@
+{
+  "name": "social",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --inspect src/index.js",
+    "watch": "node-sass --watch src/resources/scss/ --output src/public/css/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/doubleLT47/end_term_social.git"
+  },
+  "keywords": [
+    "tdt social"
+  ],
+  "author": "luannt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/doubleLT47/end_term_social/issues"
+  },
+  "homepage": "https://github.com/doubleLT47/end_term_social#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.1",
+    "express-validator": "^6.10.0",
+    "flash": "^1.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.12.3",
+    "multer": "^1.4.2",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "node-sass": "^5.0.0",
+    "nodemon": "^2.0.7"
+  }
+}

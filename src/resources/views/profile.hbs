@@ -1,0 +1,47 @@
+<div class="page-container">
+    <!-- Content Wrapper START -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Breadcrumb Start -->
+            <div class="row">
+                <!-- POST -->
+
+                <!--  Post -->
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4 ">
+                            <div class="avatar-user-custom">
+                                <img src="/{{user.avatar}}" alt="" class="img-rounded img-responsive" />
+                            </div>
+                    </div>
+                    <div class="col-sm-6 col-md-8">
+                        <h4>{{user.fullname}}</h4>
+                        <small><i class="lni lni-home"></i>  {{user.faculty}}
+                        </i></cite></small>
+                        <p>
+                            <i class="lni lni-crown"></i>   <span>Email: {{user.email}}</span>
+                            <br />
+                            <i class="lni lni-crown"></i>  <span>Chức vụ:  {{user.level}}</span>
+                            <br />
+                            <i class="lni lni-timer"></i>  <span>Khởi tạo: {{user.createAt}}</span>
+                        </p>
+                        <!-- Split button -->
+                        <div class="btn-option">
+                            {{#if (not user.level 'student')}}
+                                <button type="button" class="btn btn-primary">
+                                    <a class="change-password" href="/{{user._id}}/editPassword">Thay đổi mật khẩu</a>
+                                </button>
+                            {{/if}}
+                            <button type="button" class="btn btn-primary">
+                                <a class="change-password" href="/{{user._id}}/edit">Sửa tài khoản</a>
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

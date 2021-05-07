@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDT social</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container register">
+        <div class="row">
+            <div class="col-md-3 register-left">
+                <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+                <h3>Welcome TDT social network</h3>
+            </div>
+            <div class="col-md-9 register-right">
+    
+            <form action="/auth/registerWithGoogle" method="post" enctype="multipart/form-data">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <h3 class="register-heading">Nhập đầy đủ thông tin</h3>
+                        <div class="row register-form">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Full Name *" name="fullname" value="{{user.displayName}}" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Your Email *" name="email" value="{{user._json.email}}" />
+                                </div>
+                                <div class="form-group">
+                                    <div class="maxl">
+                                        <label class="radio inline"> 
+                                            <input type="radio" name="gender" value="male" checked>
+                                            <span> Male </span> 
+                                        </label>
+                                        <label class="radio inline"> 
+                                            <input type="radio" name="gender" value="female">
+                                            <span>Female </span> 
+                                        </label>
+                                    </div>
+                                </div>
+                        
+                                <div class="form-group">
+                                    <input type="text" name="faculty" class="form-control" placeholder="Your Faculty *" value="" />
+                                </div>
+                               
+                                <div class="form-group">
+                                    <label for="avatar">Select avatar:</label>
+                                    <input accept="image/*" type="file" id="avatar" name="avatar" multiple><br><br>
+                                </div>
+                                {{#if error}}
+                                    <div class="form-group">
+                                        <div class="alert alert-danger alert-dismissible fade show">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            {{error}}
+                                        </div>
+                                    </div>
+                                {{/if}}
+                                <Button type="submit" class="btnRegister">Lưu</Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        </div>
+
+    </div>
+</body>
+</html> 
+
+
+
+
+
+
+
+

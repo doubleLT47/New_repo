@@ -1,0 +1,63 @@
+<div class="side-nav expand-lg">
+    <div class="side-nav-inner">
+        <ul class="side-nav-menu">
+            <li class="nav-item dropdown">
+                 {{#if (and user.level 'admin')}}
+                    <a href="/admin">
+                        <span class="icon-holder">
+                            <i class="fas fa-home"></i>
+                        </span>
+                        <span class="title">Trang chủ</span>
+                    </a>
+                {{else}}
+                    {{#if (and user.level 'faculty')}}
+                        <a href="/faculty">
+                            <span class="icon-holder">
+                                <i class="fas fa-home"></i>
+                            </span>
+                            <span class="title">Trang chủ</span>
+                        </a>
+                    {{else}}
+                        <a href="/">
+                            <span class="icon-holder">
+                                <i class="fas fa-home"></i>
+                            </span>
+                            <span class="title">Trang chủ</span>
+                        </a>
+                    {{/if}}
+                {{/if}}
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="#">
+                    <span class="icon-holder">
+                        <i class="fas fa-list"></i>
+                    </span>
+                    <span class="title">Phân loại thông báo</span>
+                    <span class="arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu sub-down">
+                    <li>
+                        <a href="/notify/department">Phòng ban</a>
+                    </li>
+                    <li>
+                        <a href="/notify/theme">Chủ đề</a>
+                    </li>
+                    <li>
+                        <a href="/notify/all">Tất cả thông báo</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="https://stdportal.tdtu.edu.vn">
+                    <span class="icon-holder">
+                        <i class="fas fa-torii-gate"></i>
+                    </span>
+                    <span class="title">Cổng thông tin</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+
+<div class="header navbar">
+    <div class="header-container">
+        <div class="nav-logo">
+            {{#if (and user.level 'admin')}}
+                <a href="/admin">
+                        <b><img  src="/img/Mongo.svg" alt=""></b>
+                    <span class="logo">
+                            <img  src="/img/TDThtml.svg" alt="">
+                    </span>
+                    <!-- <h1 class="text-center mt-2">DEMO</h1> -->
+                </a>
+            {{else}}
+                {{#if (and user.level 'faculty')}}
+                    <a href="/faculty">
+                            <b><img  src="/img/Mongo.svg" alt=""></b>
+                        <span class="logo">
+                                <img  src="/img/TDThtml.svg" alt="">
+                        </span>
+                        <!-- <h1 class="text-center mt-2">DEMO</h1> -->
+                    </a>
+                {{else}}
+                    <a href="/">
+                            <b><img  src="/img/Mongo.svg" alt=""></b>
+                        <span class="logo">
+                                <img  src="/img/TDThtml.svg" alt="">
+                        </span>
+                        <!-- <h1 class="text-center mt-2">DEMO</h1> -->
+                    </a>
+                {{/if}}
+            {{/if}}
+        </div>
+        <ul class="nav-left">
+            <li>
+                <a class="sidenav-fold-toggler" href="javascript:void(0);">
+                    <i class="far fa-bars"></i>
+                </a>
+                <a class="sidenav-expand-toggler" href="javascript:void(0);">
+                    <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="nav-right">
+            <li class="search-box">
+                <input class="form-control" type="text" placeholder="Type to search...">
+                <i class="fas fa-search"></i>
+            </li>
+        
+            <li class="user-profile dropdown dropdown-animated scale-left">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img class="profile-img img-fluid" src="/{{user.avatar}}" alt="">
+                </a>
+                <ul class="dropdown-menu dropdown-md">
+                    <li>
+                        <ul class="list-media">
+                            <li class="list-item avatar-info">
+                                <div class="media-img">
+                                    <img src="/{{user.avatar}}" alt="">
+                                </div>
+                                <div class="info">
+                                    <span class="title text-semibold">{{user.fullname}}</span>
+                                    <span class="sub-title">{{this.faculty}}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a href="/profile">
+                            <i class="lni lni-user"></i>
+                            <span>Hồ sơ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/{{user._id}}/edit">
+                            <i class="lni lni-cog"></i>
+                            <span>Sửa tài khoản</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/auth/logout">
+                            <i class="lni lni-lock"></i>
+                            <span>Đăng xuất</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

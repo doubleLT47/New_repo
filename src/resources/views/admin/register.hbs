@@ -1,0 +1,112 @@
+<div class="page-container">
+    <div class="main-content">
+        <div class="container-fluid register">
+            <!-- Breadcrumb Start -->
+            <div class="row">
+                <!-- POST -->
+
+                <!--  Post -->
+                <div class="col-md-9 register-right">
+                    <form action="/admin/register" method="post" enctype="multipart/form-data">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <h3 class="register-heading">Nhập đầy đủ thông tin</h3>
+                                <div class="row register-form">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Faculty Name *" name="fullname" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Faculty Email *" name="email" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" placeholder="Password *" name="password" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control"  placeholder="Confirm Password *"  name="confirmPassword" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="faculty" class="form-control" placeholder="Faculty *" value="" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-check-label" for="thematic">
+                                                Chọn chuyên mục
+                                            </label>
+                                            <select class="form-control form-control-sm checkbox-select-all-options ml-2 p-0" id="exampleFormControlSelect1" name="thematic" required>
+                                                <option value="all">-- Tất cả các mục --</option>
+                                                <option value="cthssv">-- Phòng CTHSSV --</option>
+                                                <option value="daihoc">-- Phòng Đại học --</option>
+                                                <option value="saudaihoc">-- Phòng Sau đại học --</option>
+                                                <option value="dientoanvamaytinh">-- Phòng Điện toán và máy tính--</option>
+                                                <option value="khaothikiemdinh">-- Phòng Khảo tí và kiểm định chất lượng --</option>
+                                                <option value="taichinh">-- Phòng tài chính --</option>
+                                                <option value="CLC">-- TDT Creative Language Center --</option>
+                                                <option value="tinhoc">-- Trung tâm tin học --</option>
+                                                <option value="phattrienxahoi">-- Trung tâm đào tạo phát triển xã hội (SDTC) --</option>
+                                                <option value="quanlyungdungcongnghe">-- Trung tâm phát triển Khoa học quản lý và Ứng dụng công nghệ (ATEM) --</option>
+                                                <option value="doanhnghiepcuusinhvien">-- Trung tâm hợp tác doanh nghiệp và cựu sinh viên --</option>
+                                                <option value="luat">-- Khoa luật --</option>
+                                                <option value="ngoaingutinhoc">-- Trung tâm ngoại ngữ - tin học – bồi dưỡng văn hóa --</option>
+                                                <option value="chinhsachkinhte">-- Viện chính sách kinh tế và kinh doanh --</option>
+                                                <option value="mtcn">-- Khoa Mỹ thuật công nghiệp --</option>
+                                                <option value="ddt">-- Khoa Điện – Điện tử --</option>
+                                                <option value="cntt">-- Khoa Công nghệ thông tin --</option>
+                                                <option value="qtkd">-- Khoa Quản trị kinh doanh --</option>
+                                                <option value="mtbvld">-- Khoa Môi trường và bảo hộ lao động --</option>
+                                                <option value="ldcd">-- Khoa Lao động công đoàn --</option>
+                                                <option value="tcnh">-- Khoa Tài chính ngân hàng --</option>
+                                                <option value="gdqt">-- Khoa giáo dục quốc tế --</option>
+                                            </select>
+                                            
+                                        </div>
+                                       
+                                    
+                                        <div class="form-group">
+                                            <label for="avatar">Select avatar:</label>
+                                            <input accept="image/*" type="file" id="avatar" name="avatar" multiple><br><br>
+                                        </div>
+                                        {{#if error}}
+                                            <div class="form-group">
+                                                <div class="alert alert-danger alert-dismissible fade show">
+                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                    {{error}}
+                                                </div>
+                                            </div>
+                                        {{/if}}
+                                        <input type="submit" class="btnRegister"  value="Tạo"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        var dataNewPassword = $('input[name="password"]');
+        var dataConfirmNewPassword = $('input[name="confirmPassword"]');
+
+        dataNewPassword.change(() => {
+            if (dataNewPassword.val().length < 6) {
+                alert('Mật khẩu quá ngắn!')
+            };
+        })
+
+        dataConfirmNewPassword.change(()=> {
+            if (dataConfirmNewPassword.val() !== dataNewPassword.val()) {
+                
+                alert('Xác nhận mật khẩu không khớp!');
+            }
+           
+        })
+
+        // when dialog confirm clicked
+    });
+</script>

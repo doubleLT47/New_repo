@@ -1,0 +1,281 @@
+<div class="page-container">
+    <!-- Content Wrapper START -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Breadcrumb Start -->
+            <div class="row">
+                <!-- POST -->
+
+                <!--  Post -->
+                <div class="col-md-8">
+                    <!-- Create Post -->
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="d-flex flex-row">
+                                    <img class="avatar" src="/{{user.avatar}}" alt="">
+                                    <input readonly data-toggle="modal" data-target="#modal-post"
+                                        class="ml-2 form-control mt-1 post-box text-left"
+                                        placeholder="Bạn đang nghĩ gì ?">
+                                </div>
+                                <hr class="mt-2 mb-2" style=" border-top: 1px solid rgb(214, 212, 212);">
+                                <div class="d-flex flex-row  justify-content-center ">
+
+                                    <label class="mb-0 btn btn-light col-md-5 custom-input mr-1" for="upload-photo"><i
+                                            class="far fa-images"></i> Ảnh </label>
+                            
+                                    <label class="mb-0 btn btn-light col-md-5 custom-input ml-1" for="upload-video"><i
+                                            class="fab fa-youtube"></i> Video</label>
+                                   
+                                </div>
+
+
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Create Post -->
+                    <div class="card mt-1">
+                        <div class="card-header pb-0">
+                            <img class="avatar" src="img/avatar.jpg" alt="">
+                            <div class="pl-2 d-flex flex-column">
+                                <p class="avatar-name"> Lê Thanh Tú</h5>
+                                <p class="p-0 post-date">December 23,2020</p>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pb-0">
+                            <blockquote class="blockquote mb-0 ">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
+                                    erat a ante.</p>
+                                <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source
+                                        Title</cite></footer>
+                            </blockquote>
+                        </div>
+                        <div class="card-body pt-2 text-muted">
+                            <div class="d-flex ">
+                                <div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>
+                                <div class="ml-auto text-right"> 20 Comments </div>
+                            </div>
+                        </div>
+                        <hr class="mt-0 mb-1 ">
+                        <div class="d-flex post-react justify-content-around ">
+                            <button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>
+                            <button class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>
+                            <button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>
+                        </div>
+                    </div>
+
+                    <!-- Card test -->
+
+                    <div class="card mt-1">
+                        <div class="card-header pb-0">
+                            <img class="avatar" src="img/avatar.jpg" alt="">
+                            <div class="pl-2 d-flex flex-column">
+                                <p class="avatar-name"> Lê Thanh Tú</h5>
+                                <p class="p-0 post-date">December 23,2020</p>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pb-0">
+                            <blockquote class="blockquote mb-0 ">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
+                                    erat a ante.</p>
+                                <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source
+                                        Title</cite></footer>
+                            </blockquote>
+                        </div>
+                        <div class="card-body pt-2 text-muted">
+                            <div class="d-flex ">
+                                <div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>
+                                <div class="ml-auto text-right"> 20 Comments </div>
+                            </div>
+                        </div>
+                        <hr class="mt-0 mb-1 ">
+                        <div class="d-flex post-react justify-content-around ">
+                            <button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>
+                            <button  data-toggle="collapse" data-target="#collapseExample"  class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>
+                            <button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>
+                        </div>
+                    </div>
+
+                                            {{!--  Comment layout --}}
+                     <div class="collapse" id="collapseExample">
+                    <div class="card card-body mb-0">
+                            <div class="pl-2 flex-row">
+                           <img class="avatar-comment mt-1 mr-2" src="{{post.user.avatar}}" alt="">
+                           <input type="email" class="form-control rounded  col-11 mt-1" placeholder="Viết bình luận ...">   
+                            </div>
+                            {{!-- Comment has posted --}}
+                         
+
+                             <div class="pl-2 d-flex flex-row  align-items-start mt-2">
+                           <img class="avatar-comment mt-2 " src="{{post.user.avatar}}" >
+                                <div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > 
+                                        <a class="font-weight-bold" href="#"> Nguyễn Trung  </a>
+                                         <div >Ay what the fuck lol
+                                                My idea of 2D + 3D with blocky stuff and cursed high quality graphics is finally here!
+                                                great job mate
+                                         </div>
+                                </div>
+                            </div>
+
+                    {{!-- <div class="card mt-1">
+                        <div class="card-header pb-0">
+                            <img class="avatar" src="img/avatar.jpg" alt="">
+                            <div class="pl-2 d-flex flex-column">
+                                <p class="avatar-name"> Lê Thanh Tú</h5>
+                                <p class="p-0 post-date">December 23,2020</p>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pb-0">
+                            <blockquote class="blockquote mb-0 ">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-xs-8 p-0">
+                                            <div class="card-body p-1">
+                                                <iframe width="100%"  src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1"></iframe>
+                                            </div>
+                                        </div>
+                                         <div class="col-sm-6 col-xs-8 p-0">
+                                            <div class="card-body p-1">
+                                                <iframe width="100%"  src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1"></iframe>
+                                            </div>
+                                        </div>
+                                         <div class="col-sm-6 col-xs-8 p-0">
+                                            <div class="card-body p-1">
+                                                <iframe width="100%"  src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1"></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source
+                                        Title</cite></footer>
+                            </blockquote>
+                        </div>
+                        
+                        <div. class="card-body pt-2 text-muted">
+                            <div class="d-flex ">
+                                <div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>
+                                <div class="ml-auto text-right"> 20 Comments </div>
+                            </div>
+                        </div.card-body>
+                        <hr class="mt-0 mb-1 ">
+                        <div class="d-flex post-react justify-content-around ">
+                            <button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>
+                            <button class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>
+                            <button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>
+                        </div>
+                    </div> --}}
+
+                    <!-- End card test -->
+
+
+                </div>
+                <!-- End Post -->
+                <!-- Announce -->
+                <div class="col-md-4">
+
+                </div>
+                <!--End  Announce -->
+            </div>
+            <!-- Breadcrumb End -->
+        </div>
+
+
+    </div>
+    <!-- Content Wrapper END -->
+
+    <!-- Footer START -->
+    
+
+</div>
+
+
+<!-- Modal  Post-->
+<div class="modal fade" id="modal-post" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle">Tạo bài viết</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="avatar" src="/{{user.avatar}}" alt="">
+                <div class="pl-2 d-flex flex-column">
+                    <p class="avatar-name">{{user.fullname}}</p>
+                    <div class="badge badge-light col-md-2 col-2"><i class="fas fa-globe-asia"></i> Công khai <i
+                            class="fas fa-caret-down"></i></div>
+                </div>
+                <form method="POST" id="form-add-post" >
+                    <textarea name="caption" id="post-caption" placeholder="Bạn đang nghĩ gì thế ? " type="text"
+                        style="border: none; border-width: 0; box-shadow: none;font-size:17px" class="mt-1 form-control"></textarea>
+                    <div class="img-post-field">
+                        <div class="edit-post-field">
+                            <div class=" d-flex flex-row">
+                                <button class="btn btn-light edit-img-post mt-4 ml-4 "> <i class="fas fa-folder-plus"></i>
+                                    Thêm ảnh</button>
+                                <i class="far fa-times-circle float-right remove-img-post mr-3 mt-4"></i>
+                            </div>
+
+                        </div>
+
+
+                        {{!-- <img src="img/dark-souls.jpg" class=" float-right form-control " style="height: auto;"> --}}
+
+                    </div>
+                    <input type="file" name="video" id="upload-video">
+                    <input type="file" name="image"  accept="image/*" multiple id="upload-photo">
+                    <div class="add-to-post mt-3">
+                        <button type="button" class="btn btn-light btn-circle float-right" data-toggle="tooltip"
+                            data-placement="top" title="Nhiều hơn"> <i class="fas fa-ellipsis-h"></i> </button>
+                        <button type="button" class="btn btn-light btn-circle float-right" data-toggle="tooltip"
+                            data-placement="top" title="Thêm video"> <i class="fab fa-youtube text-danger"></i> </button>
+                        <button type="button" class="btn btn-light btn-circle float-right edit-img-post" data-toggle="tooltip"
+                            data-placement="top" title="Thêm ảnh"> <i class="fas fa-image text-success"></i> </button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" data-id="{{user._id}}" id="luan-btn" form="form-add-post" class="btn btn-primary">Đăng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal  Post-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let button = document.getElementById('luan-btn');
+        let id = button.getAttribute('data-id');
+        const URL = `http://localhost:8080/post/${id}`;
+        button.onclick = (event) => {
+            var caption = document.getElementById('post-caption').value;
+            var imageFile = document.getElementById('upload-photo').files;
+            var video = document.getElementById('upload-video').value;
+
+            var formData = new FormData();
+            formData.append('caption', caption);
+            formData.append('image', imageFile[0]);
+            formData.append('video', video);
+            formData.append('thematic', '');
+            formData.append('userID', id);
+
+            $.ajax({
+                url: URL,
+                method: "POST",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    alert(data.message);
+                }
+            });
+        }
+    
+        
+    
+    });
+    
+
+</script>
