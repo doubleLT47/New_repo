@@ -22,6 +22,12 @@ class Post {
                 
             })
     }
+
+    showListPosts(req, res, next) {
+        postModel.find({})
+        .then(posts => res.send(JSON.stringify(posts)))
+        .catch((err)=> res.status(500).json({err: err}));
+    }
 }
 
 module.exports = new Post;

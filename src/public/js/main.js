@@ -61,35 +61,4 @@
     });
   });
 
-  //   function doPost(form, id) {
-	// 	var ajax = new XMLHttpRequest();
-	// 	ajax.open("POST", "/post/"+id, true);
-
-	// 	ajax.onreadystatechange = function() {
-	// 		if (this.readyState == 4 && this.status == 200) {
-
-	// 			var response = JSON.parse(this.responseText);
-
-	// 			alert(response.message);
-
-	// 			if (response.status == "success") {
-	// 				document.getElementById("form-add-post").querySelector("input[name='image']").value = "";
-	// 				document.getElementById("form-add-post").querySelector("input[name='video']").value = "";
-	// 				document.getElementById("form-add-post").querySelector("textarea[name='caption']").value = "";
-
-	// 			  $('#upload-photo').val(""); 
-  //          $('.img-post-field img').remove('img');
-
-	// 				showNewsfeed();
-	// 			}
-	// 		}
-	// 	};
-  //   ajax.setRequestHeader('content-type', 'multipart/form-data');
-	// 	var formData = new FormData(form);
-	// 	ajax.send(formData);
-
-	// 	return false;
-	// }
-
-
     

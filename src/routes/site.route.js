@@ -6,7 +6,7 @@ const multer = require('multer');
 
 const checkLogin = require('../app/middlewares/CheckLogin');
 const siteController = require('../app/controllers/Site.controller');
-const checkAdminAndFaculty = require('../app/middlewares/CheckAdminAndFaculty');
+const checkStudent = require('../app/middlewares/CheckStudent');
 
 const upload = multer({ dest: 'src/public/uploads/', fileFilter: (req,file,callback) => {
     if (file.mimetype.startsWith('image/')) {
@@ -16,7 +16,7 @@ const upload = multer({ dest: 'src/public/uploads/', fileFilter: (req,file,callb
     console.log(file);
 }})
 
-router.get('/', checkLogin, siteController.index);
+router.get('/', checkLogin, checkStudent, siteController.index);
 router.get('/:id/edit', checkLogin, siteController.edit);
 router.put('/:id',checkLogin, upload.single('avatar'), siteController.update);
 router.get('/profile', checkLogin, siteController.showProfile);

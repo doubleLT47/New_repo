@@ -7,7 +7,7 @@
                 <!-- POST -->
 
                 <!--  Post -->
-                <div class="col-md-8">
+                <div class="col-md-8 " id="new-feed">
                     <!-- Create Post -->
                     <div class="card">
                         <ul class="list-group list-group-flush">
@@ -33,64 +33,10 @@
                             </li>
                         </ul>
                     </div>
+                </div>
                     <!-- Card test -->
 
-                    <div class="card mt-1 luan-card">
-                        <div class="card-header pb-0">
-                            <img class="avatar" src="img/avatar.jpg" alt="">
-                            <div class="pl-2 d-flex flex-column">
-                                <p class="avatar-name"> Lê Thanh Tú</h5>
-                                <p class="p-0 post-date">December 23,2020</p>
-                            </div>
-                        </div>
-                        <div class="card-body pt-0 pb-0">
-                            <blockquote class="blockquote mb-0 ">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-                                    erat a ante.</p>
-                                <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source
-                                        Title</cite></footer>
-                            </blockquote>
-                        </div>
-                        <div class="card-body pt-2 text-muted">
-                            <div class="d-flex ">
-                                <div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>
-                                <div class="ml-auto text-right"> 20 Comments </div>
-                            </div>
-                        </div>
-                        <hr class="mt-0 mb-1 ">
-                        <div class="d-flex post-react justify-content-around ">
-                            <button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>
-                            <button  data-toggle="collapse" data-target="#collapseExample"  class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>
-                            <button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>
-                        </div>
-                    </div>
-
-                    {{!--  Comment layout --}}
-                     <div class="collapse" id="collapseExample">
-                    <div class="card card-body mb-0">
-                        <div class="pl-2 flex-row">
-                            <img class="avatar-comment mt-1 mr-2" src="{{user.avatar}}" alt="">
-                            <input type="email" class="form-control rounded  col-11 mt-1" placeholder="Viết bình luận ...">
-                               
-                        </div>
-                            {{!-- Comment has posted --}}
-                         
-
-                        <div class="pl-2 d-flex flex-row  align-items-start mt-2">
-                           <img class="avatar-comment mt-2 " src="{{user.avatar}}" >
-                            <div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > 
-                                <a class="font-weight-bold" href="#">{{user.fullname}}</a>
-                                <div >Ay what the fuck lol
-                                        My idea of 2D + 3D with blocky stuff and cursed high quality graphics is finally here!
-                                        great job mate
-                                </div>
-                            </div>
-                        </div>
-
-                    <!-- End card test -->
-
-
-                </div>
+                    
                 <!-- End Post -->
                 <!-- Announce -->
                 <div class="col-md-4">
@@ -167,6 +113,13 @@
 <!-- End Modal  Post-->
 
 <script>
+
+    $(document).ready(function() {
+        getPosts();
+
+        console.log()
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
         let button = document.getElementById('luan-btn');
         let id = button.getAttribute('data-id');
@@ -196,8 +149,74 @@
             });
         }
     
-        
-    
     });
+
+    function getPosts() {
+        const URL = `http://localhost:8080/post/api`;
+        $.ajax({
+            url: URL,
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                console.log(data)
+                renderPost(data)
+            }
+        })
+    }
     
+    function renderPost(posts) {
+        let html = '';
+
+        $.each(posts, function(index, post) {
+            html += `<div class="card mt-1 luan-card">`
+                html +=`<div class="card-header pb-0">`
+                    html +=`<img class="avatar" src="img/avatar.jpg" alt="">`
+                    html +=`<div class="pl-2 d-flex flex-column">`
+                        html +=`<p class="avatar-name"> Lê Thanh Tú</h5>`
+                        html +=`<p class="p-0 post-date">December 23,2020</p>`
+                    html += `</div>`
+                html +=`</div>`
+                html +=`<div class="card-body pt-0 pb-0">`
+                    html +=`<blockquote class="blockquote mb-0 ">`
+                        html +=`<p>${post.caption}</p>`
+                        html += `<footer class="blockquote-footer">`
+                            html +=` Someone famous in <cite title="Source Title">Source Title</cite>`
+                        html +=`</footer>`
+                    html +=`</blockquote>`
+                html +=`</div>`
+                html +=`<div class="card-body pt-2 text-muted">`
+                    html +=`<div class="d-flex ">`
+                        html +=`<div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>`
+                        html +=`<div class="ml-auto text-right"> 20 Comments </div>`
+                    html +=`</div>`
+                html +=`</div>`
+                html +=`<hr class="mt-0 mb-1 ">`
+                html +=`<div class="d-flex post-react justify-content-around ">`
+                    html +=`<button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>`
+                    html +=`<button  data-toggle="collapse" data-target="#${post._id}"  class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>`
+                    html +=`<button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>`
+                html +=`</div>`
+            html +=`</div>`
+
+           
+            html +=`<div class="collapse" id="${post._id}">`
+                html +=`<div class="card card-body mb-0">`
+                    html +=`<div class="pl-2 flex-row">`
+                        html +=`<img class="avatar-comment mt-1 mr-2" src="" alt="">`
+                        html +=`<input type="email" class="form-control rounded  col-11 mt-1" placeholder="Viết bình luận ...">`
+                        
+                    html +=`</div>`
+                    html +=`<div class="pl-2 d-flex flex-row  align-items-start mt-2">`
+                        html +=`<img class="avatar-comment mt-2 " src="" >`
+                        html +=`<div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > `
+                            html +=`<a class="font-weight-bold" href="#"></a>`
+                            html +=`<div >Ay what the fuck lol My idea of 2D + 3D with blocky stuff and cursed high quality graphics is finally here! great job mate </div>`
+                        html +=`</div>`
+                    html +=`</div>`
+                html +=`</div>`
+            html +=`</div>`
+        })
+
+        $('#new-feed').append(html);
+    }
 </script>
