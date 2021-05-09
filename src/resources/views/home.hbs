@@ -7,9 +7,9 @@
                 <!-- POST -->
 
                 <!--  Post -->
-                <div class="col-md-8 " id="new-feed">
+                <div class="col-md-8 ">
                     <!-- Create Post -->
-                    <div class="card">
+                    <div class="card luan-mb-0">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <div class="d-flex flex-row">
@@ -32,6 +32,11 @@
 
                             </li>
                         </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12" id="new-feed">
+
+                        </div>
                     </div>
                 </div>
                     <!-- Card test -->
@@ -113,11 +118,22 @@
 <!-- End Modal  Post-->
 
 <script>
-
+    var postPage = 1;
+    var disabledLoadMore = false;
     $(document).ready(function() {
-        getPosts();
-
+        
+        getPosts(1);
     });
+
+    $(window).scroll(function() {
+        var scrollTop = $(this).scrollTop();
+        var heightWindow = $(this).height();
+        var documentHeight = $(document).height();
+        if (!disabledLoadMore && Math.round(heightWindow + scrollTop) >= documentHeight -100 ){
+            console.log(disabledLoadMore);
+             loadMore();
+        }
+    })
 
     document.addEventListener('DOMContentLoaded', () => {
         let button = document.getElementById('luan-btn');
@@ -144,6 +160,7 @@
                 processData: false,
                 success: function (data) {
                     alert(data.message);
+                    $('#new-feed').empty();
                     getPosts();
                 }
             });
@@ -151,13 +168,19 @@
     
     });
 
-    function getPosts() {
-        const URL = `/post/api`;
+    function getPosts(page) {
+        const URL = `/post/api?page=${page}`;
         $.ajax({
             url: URL,
             method: "GET",
             dataType: "json",
             success: function (data) {
+
+                console.log(data);
+                
+                if (!data) {
+                    disabledLoadMore = true;
+                }
                 renderPost(data);
             }
         })
@@ -241,7 +264,7 @@
                 success: function (cmt) {
                     alert('đã cmt');
                     content.value = '';
-                    {{!-- getComment(id); --}}
+                    getComment(id);
                 }
                 , error: function (err) {
                     console.log(err);
@@ -274,5 +297,9 @@
             html +=`</div>`
          });
         $("#luannt"+id).append(html);
+    }
+    function loadMore() {
+        postPage++;
+        getPosts(postPage);
     }
 </script>

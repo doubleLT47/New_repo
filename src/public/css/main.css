@@ -2865,6 +2865,7 @@ button:focus {
 
 .avatar{
   width: 45px;
+  height: 45px;
   border-radius: 50%;
   float: left;
 }
@@ -3345,3 +3346,6 @@ a.change-password {
   .luan-comment {
     width:100% !important;
   }
+.luan-mb-0 {
+  margin-bottom: 0 !important;
+}
