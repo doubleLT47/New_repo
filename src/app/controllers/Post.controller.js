@@ -29,20 +29,27 @@ class Post {
             })
     }
 
-    showListPosts(req, res, next) {
+    async showListPosts(req, res, next) {
+        let data = [];
         let page = parseInt(req.query.page) || 1;
         var skip = (page -1)*PAGE_SIZE;
+        // console.log(page, skip)
+        // var count = parseInt(await postModel.count({}));
+        
+        // if (skip >= count-5 ) {
+        //     console.log("true")
+        //     return res.send(JSON.stringify(data));
+        // }
         
         postModel.find({})
             .sort({createAt: -1})
             .skip(skip)
             .limit(PAGE_SIZE)
-            .then(posts => {
-                let data = [];
+            .then(posts => {                
                 let i = posts.length;
-                console.log(posts);
-                if (!posts) {
-                    return res.send(JSON.stringify(data));
+                
+                if (i === 0) {
+                    res.send(JSON.stringify(data));
                 }
                 posts.map(async (post, index) => {
                     
@@ -57,8 +64,6 @@ class Post {
                         res.send(JSON.stringify(data));
                     }
                 })
-                
-                
             })
             .catch((err)=> res.status(500).json({err: "Server not responding!"}));
     }

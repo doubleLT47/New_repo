@@ -3,7 +3,6 @@ const postModel = require('../model/posts');
 const UserAccount = require('../model/userAccount');
 const commentModel = require('../model/comments');
 
-
 class Comment {
     //[GET] /index
     
@@ -20,19 +19,22 @@ class Comment {
     }
 
     showListComment(req, res, next) {
-
-       
+        console.log(req.params.id);
         commentModel.find({postID: req.params.id})
+            .sort({createAt: -1})
             .then(comments => {
                 let data = [];
                 let i = comments.length;
+                if (i === 0) {
+                    res.send(JSON.stringify(data));
+                }
                 comments.map(async (cmt, index) => {
                     let acc = await UserAccount.findOne({_id: cmt.userID});
                     
-                    let {_id, content,postID, userID, createAt} = cmt;
+                    let {_id, content,postID, userID} = cmt;
                     
                     let userName = acc.fullname, userAvatar = acc.avatar;
-                    var obj = {_id, content, postID, userID, userName, userAvatar, createAt};
+                    var obj = {_id, content,postID, userID, userName, userAvatar};
                     data.push(obj); 
                     if (index === i - 1) {
                         res.send(JSON.stringify(data));

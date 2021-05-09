@@ -129,9 +129,13 @@
         var scrollTop = $(this).scrollTop();
         var heightWindow = $(this).height();
         var documentHeight = $(document).height();
-        if (!disabledLoadMore && Math.round(heightWindow + scrollTop) >= documentHeight -100 ){
-            console.log(disabledLoadMore);
-             loadMore();
+        if (Math.round(heightWindow + scrollTop) >= documentHeight -100 ){
+            console.log(disabledLoadMore)
+            if (!disabledLoadMore ) {
+                console.log(disabledLoadMore);
+                loadMore();
+            }
+            
         }
     })
 
@@ -175,13 +179,13 @@
             method: "GET",
             dataType: "json",
             success: function (data) {
-
                 console.log(data);
-                
-                if (!data) {
+                if (data.length === 0) {
                     disabledLoadMore = true;
                 }
                 renderPost(data);
+            }, error: function (data) {
+                console.log(typeof data);
             }
         })
     }
@@ -264,6 +268,7 @@
                 success: function (cmt) {
                     alert('đã cmt');
                     content.value = '';
+                    $("#luannt"+id).empty();
                     getComment(id);
                 }
                 , error: function (err) {
