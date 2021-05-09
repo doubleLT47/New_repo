@@ -144,8 +144,6 @@
 <script>
     $(document).ready(function() {
         getPosts();
-
-        console.log()
     });
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -187,7 +185,6 @@
             method: "GET",
             dataType: "json",
             success: function (data) {
-                console.log(data)
                 renderPost(data)
             }
         })
@@ -200,58 +197,113 @@
 
         $.each(posts, function(index, post) {
             if (post.userID === id) {
-                html += `<div class="card mt-1 luan-card">`
-                    html +=`<div class="card-header pb-0">`
-                        html +=`<img class="avatar" src="/${post.userAvatar}" alt="">`
-                        html +=`<div class="pl-2 d-flex flex-column">`
-                            html +=`<p class="avatar-name"> ${post.userName}</h5>`
-                            html +=`<p class="p-0 post-date">${moment(post.createAt).fromNow()}</p>`
-                        html += `</div>`
-                    html +=`</div>`
-                    html +=`<div class="card-body pt-0 pb-0">`
-                        html +=`<blockquote class="blockquote mb-0 ">`
-                            html +=`<p>${post.caption}</p>`
-                            html += `<footer class="blockquote-footer">`
-                                html +=` Someone famous in <cite title="Source Title">Source Title</cite>`
-                            html +=`</footer>`
-                        html +=`</blockquote>`
-                    html +=`</div>`
-                    html +=`<div class="card-body pt-2 text-muted">`
-                        html +=`<div class="d-flex ">`
-                            html +=`<div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>`
-                            html +=`<div class="ml-auto text-right"> 20 Comments </div>`
-                        html +=`</div>`
-                    html +=`</div>`
-                    html +=`<hr class="mt-0 mb-1 ">`
-                    html +=`<div class="d-flex post-react justify-content-around ">`
-                        html +=`<button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>`
-                        html +=`<button  data-toggle="collapse" data-target="#luan${post._id}"  class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>`
-                        html +=`<button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>`
+               html += `<div class="card mt-1 luan-card">`
+                html +=`<div class="card-header pb-0">`
+                    html +=`<img class="avatar" src="/${post.userAvatar}" alt="">`
+                    html +=`<div class="pl-2 d-flex flex-column">`
+                        html +=`<p class="avatar-name"> ${post.userName}</h5>`
+                        html +=`<p class="p-0 post-date">${moment(post.createAt).fromNow()}</p>`
+                    html += `</div>`
+                html +=`</div>`
+                html +=`<div class="card-body pt-0 pb-0">`
+                    html +=`<blockquote class="blockquote mb-0 ">`
+                        html +=`<p>${post.caption}</p>`
+                        html += `<footer class="blockquote-footer">`
+                            html +=` Someone famous in <cite title="Source Title">Source Title</cite>`
+                        html +=`</footer>`
+                    html +=`</blockquote>`
+                html +=`</div>`
+                html +=`<div class="card-body pt-2 text-muted">`
+                    html +=`<div class="d-flex ">`
+                        html +=`<div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>`
+                        html +=`<div class="ml-auto text-right"> 20 Comments </div>`
                     html +=`</div>`
                 html +=`</div>`
+                html +=`<hr class="mt-0 mb-1 ">`
+                html +=`<div class="d-flex post-react justify-content-around ">`
+                    html +=`<button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>`
+                    html +=`<button  data-toggle="collapse" data-target="#luan${post._id}"  class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>`
+                    html +=`<button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>`
+                html +=`</div>`
+            html +=`</div>`
 
-            
-                html +=`<div class="collapse" id="luan${post._id}">`
-                    html +=`<div class="card card-body mb-0" id="luan-comment">`
-                        html +=`<div class="pl-2 flex-row">`
-                            html +=`<img class="avatar-comment mt-1 mr-2" src="${post.userAvatar}" alt="">`
-                            html +=`<input type="text" name="comment" class="form-control rounded  col-11 mt-1" placeholder="Viết bình luận ...">`
-                            
-                        html +=`</div>`
-                        html +=`<div class="pl-2 d-flex flex-row  align-items-start mt-2">`
-                            html +=`<img class="avatar-comment mt-2 " src="" >`
-                            html +=`<div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > `
-                                html +=`<span class="font-weight-bold" href="#">Luaan nguyen </span> <span class="float-right post-date">${moment(post.createAt).fromNow()}</span>`
-                                html +=`<div >`
-                                    html+= `Ay what the fuck lol My idea of 2D + 3D with blocky stuff and cursed high quality graphics is finally here! great job mate `
-                                html+= `</div>`
-                            html +=`</div>`
-                        html +=`</div>`
+           
+            html +=`<div class="collapse" id="luan${post._id}">`
+                html +=`<div class="card card-body mb-0" id="luannt${post._id}">`
+                    html +=`<div class="pl-2 d-flex luan-comment">`
+                        html +=`<img class="avatar-comment mt-1 mr-2" src="${post.userAvatar}" alt="">`
+                        html +=`<input type="text" name="comment" id="cmt${post._id}"  class="form-control rounded  col-lg-11 col-md-10 col-sm-8 mt-1" placeholder="Viết bình luận ...">`
+                        html += `<button type="button" data-user="{{user._id}}" data-id="${post._id}" onclick="sendComment(this)" class="btn btn-light"><i class="far fa-paper-plane"></i></button>`
                     html +=`</div>`
                 html +=`</div>`
+            html +=`</div>`
+
+            getComment(post._id);
             }
         })
 
         $('#new-feed').append(html);
+    }
+
+    function sendComment(btn) {
+        let id = btn.getAttribute('data-id');
+        let content = document.getElementById('cmt'+id);
+        let idUser = btn.getAttribute('data-user');
+        console.log(id);
+
+        if (content.value === '') {
+            alert('Bạn chưa bình luận điều gì!');
+        }
+        else  {
+            const URL = `/comment/api`;
+
+            let data = {
+                content: content.value,
+                postID: id,
+                userID: idUser
+            };
+
+            $.ajax({
+                url: URL,
+                method: "POST",
+                data: data,
+                contentType: "application/x-www-form-urlencoded",
+                dataType: 'json',
+                success: function (cmt) {
+                    alert('đã cmt');
+                    content.value = '';
+                    getComment(id);
+                }
+                , error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+    }
+    function getComment(postID) {
+        const URL = `/comment/api/${postID}`;
+        $.ajax({
+            url: URL,
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                renderComment(data, postID);
+            }
+        })
+    }
+    function renderComment(comments, id) {
+        let html ='';
+         $.each(comments, function(index, comment) {
+            html +=`<div class="pl-2 d-flex flex-row  align-items-start mt-2">`
+                html +=`<img class="avatar-comment mt-2 " src="/${comment.userAvatar}" >`
+                html +=`<div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > `
+                    html +=`<span class="font-weight-bold" >${comment.userName}</span> <span class="float-right post-date">${moment(comment.createAt).fromNow()}</span>`
+                    html +=`<div >`
+                        html+= `${comment.content}`
+                    html+= `</div>`
+                html +=`</div>`
+            html +=`</div>`
+         });
+        $("#luannt"+id).append(html);
     }
 </script>

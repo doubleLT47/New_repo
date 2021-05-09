@@ -30,16 +30,8 @@ class Post {
     }
 
     showListPosts(req, res, next) {
-        let page = req.query.page;
-
-        if (page) {
-            page = parseInt(page);
-            var skip = (page -1)*PAGE_SIZE;
-
-        }
-        else {
-            page = 1;
-        }
+        let page = parseInt(req.query.page) || 1;
+        var skip = (page -1)*PAGE_SIZE;
         
         postModel.find({})
             .sort({createAt: -1})
