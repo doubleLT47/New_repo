@@ -7,7 +7,7 @@
                 <!-- POST -->
 
                 <!--  Post -->
-                <div class="col-md-8" id="new-feed">
+                <div class="col-xl-8 col-md-12 col-12" id="new-feed">
                     <!-- Create Post -->
                     <div class="card">
                         <ul class="list-group list-group-flush">
@@ -24,7 +24,7 @@
                                     <label class="mb-0 btn btn-light col-md-5 custom-input mr-1" for="upload-photo"><i
                                             class="far fa-images"></i> Ảnh </label>
                             
-                                    <label class="mb-0 btn btn-light col-md-5 custom-input ml-1" for="upload-video"><i
+                                    <label data-toggle="modal" data-target="#modal-post"  type="button" class="mb-0 btn btn-light btn-youtube-main col-md-5 custom-input ml-1"><i
                                             class="fab fa-youtube"></i> Video</label>
                                    
                                 </div>
@@ -36,10 +36,11 @@
                     
                 <!-- End Post -->
                 <!-- Announce -->
-                <div class="col-md-4">
+                <div class="col-xl-4">
 
                 </div>
                 <!--End  Announce -->
+           
             </div>
             <!-- Breadcrumb End -->
         </div>
@@ -83,12 +84,8 @@
                             </div>
 
                         </div>
-
-
-                        {{!-- <img src="img/dark-souls.jpg" class=" float-right form-control " style="height: auto;"> --}}
-
                     </div>
-                    <input type="file" name="video" id="upload-video">
+                        <input class="ml-2 form-control mt-1 ytlink-input text-left" name="ytlink-input"  placeholder="Thêm đường dẫn video tại đây ">
                     <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg" multiple id="upload-photo">
                     <div class="add-to-post mt-3">
                         {{#if (and user.thematic 'all')}}
@@ -124,10 +121,11 @@
                         {{/if}}
                         <button type="button" class="btn btn-light btn-circle float-right" data-toggle="tooltip"
                             data-placement="top" title="Nhiều hơn"> <i class="fas fa-ellipsis-h"></i> </button>
-                        <button type="button" class="btn btn-light btn-circle float-right" data-toggle="tooltip"
+                        <button type="button" class="btn btn-light btn-circle float-right btn-youtube" data-toggle="tooltip"
                             data-placement="top" title="Thêm video"> <i class="fab fa-youtube text-danger"></i> </button>
                         <button type="button" class="btn btn-light btn-circle float-right edit-img-post" data-toggle="tooltip"
                             data-placement="top" title="Thêm ảnh"> <i class="fas fa-image text-success"></i> </button>
+                            
                     </div>
                 </form>
             </div>

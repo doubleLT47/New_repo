@@ -3312,6 +3312,12 @@ a.change-password {
  font-size: 14px;
 }
 
+.ytlink-input{
+  border-radius: 3px;
+  display: none;
+}
+
+
  /* datepicker  */
   #datepicker{
   width:180px; 
