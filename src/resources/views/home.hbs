@@ -7,7 +7,7 @@
                 <!-- POST -->
 
                 <!--  Post -->
-                <div class="col-md-8 ">
+                <div class="col-xl-8 col-md-12 ">
                     <!-- Create Post -->
                     <div class="card luan-mb-0">
                         <ul class="list-group list-group-flush">
@@ -44,9 +44,85 @@
                     
                 <!-- End Post -->
                 <!-- Announce -->
-                <div class="col-md-4">
+               <div class="col-xl-4 col-md-0 col-0 pl-0">
+                    <div class="position-fixed announce">
+                         
+                        <div class="d-flex flex-row announce-head justify-content-center">
+                                <h2 class="float-center text-light font-weight-bold ">Thông báo mới</h2>
+                                <a href="#" style="text-decoration-line: underline " class="ml-2 font-weight-bold text-warning">Xem tất cả</a>
+                        </div>
+                        <hr style="width: 90%;" class=" mt-0 mb-2">
+                  
+                        <div class="announce-detail mb-2">
+                                <div class="d-flex flex-row ml-2 announce-faculty">
+                                    <span> [  Phòng đại học ]  </span>
+                                    <span class="ml-2"> - </span>
+                                    <span class="ml-2"> 03-02-2021 </span>
+                                </div>
+                                 <a class="announce-title ml-2">
+                                        Thông báo các môn mở trong học kì hè 2020 -2021
+                                </a>
 
+                                 <div class="announce-body ml-2">
+                                        Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
+                                </div>
+                    
+                        </div>
+
+                         <div class="announce-detail mb-2">
+                                <div class="d-flex flex-row ml-2 announce-faculty">
+                                    <span> [  Phòng đại học ]  </span>
+                                    <span class="ml-2"> - </span>
+                                    <span class="ml-2"> 03-02-2021 </span>
+                                </div>
+                                 <a class="announce-title ml-2">
+                                        Thông báo các môn mở trong học kì hè 2020 -2021
+                                </a>
+
+                                 <div class="announce-body ml-2">
+                                        Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
+                                </div>
+                    
+                        </div>
+
+                         <div class="announce-detail mb-2">
+                                <div class="d-flex flex-row ml-2 announce-faculty">
+                                    <span> [  Phòng đại học ]  </span>
+                                    <span class="ml-2"> - </span>
+                                    <span class="ml-2"> 03-02-2021 </span>
+                                </div>
+                                 <a class="announce-title ml-2">
+                                        Thông báo các môn mở trong học kì hè 2020 -2021
+                                </a>
+
+                                 <div class="announce-body ml-2">
+                                        Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
+                                </div>
+                    
+                        </div>
+
+                         <div class="announce-detail mb-2">
+                                <div class="d-flex flex-row ml-2 announce-faculty">
+                                    <span> [  Phòng đại học ]  </span>
+                                    <span class="ml-2"> - </span>
+                                    <span class="ml-2"> 03-02-2021 </span>
+                                </div>
+                                 <a class="announce-title ml-2">
+                                        Thông báo các môn mở trong học kì hè 2020 -2021
+                                </a>
+
+                                 <div class="announce-body ml-2">
+                                        Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
+                                </div>
+                    
+                        </div>
+
+                        
+                    
+                    </div>
+                   
                 </div>
+                <!--End  Announce -->
                 <!--End  Announce -->
             </div>
             <!-- Breadcrumb End -->
@@ -57,7 +133,18 @@
     <!-- Content Wrapper END -->
 
     <!-- Footer START -->
-    
+     
+      <footer class="content-footer">
+        <div class="footer">
+            <div class="copyright">
+                <span>Copyright © 2021 <b class="text-dark">TDTU</b>. All Right Reserved</span>
+                <span class="go-right">
+                    <a href="" class="text-gray">Term &amp; Conditions</a>
+                    <a href="" class="text-gray">Privacy &amp; Policy</a>
+                </span>
+            </div>
+        </div>
+    </footer>
 
 </div>
 
@@ -96,7 +183,7 @@
                         {{!-- <img src="img/dark-souls.jpg" class=" float-right form-control " style="height: auto;"> --}}
 
                     </div>
-                    <input class="ml-2 form-control mt-1 ytlink-input text-left" name="ytlink-input"  placeholder="Thêm đường dẫn video tại đây ">
+                    <input readonly disabled="disabled" class="ml-2 form-control mt-1 ytlink-input text-left" name="ytlink-input"  placeholder="Thêm đường dẫn video tại đây ">
                     <input type="file" name="image"  accept="image/*" multiple id="upload-photo">
                     <div class="add-to-post mt-3">
                         <button type="button" class="btn btn-light btn-circle float-right" data-toggle="tooltip"
@@ -146,12 +233,12 @@
         button.onclick = (event) => {
             var caption = document.getElementById('post-caption').value;
             var imageFile = document.getElementById('upload-photo').files;
-            var video = document.getElementById('upload-video').value;
+            //var video = document.getElementById('upload-video').value;
 
             var formData = new FormData();
             formData.append('caption', caption);
             formData.append('image', imageFile[0]);
-            formData.append('video', video);
+            //formData.append('video', video);
             formData.append('thematic', '');
             formData.append('userID', id);
 
@@ -160,7 +247,7 @@
                 method: "POST",
                 data: formData,
                 cache: false,
-                contentType: false,
+                contentType: false, 
                 processData: false,
                 success: function (data) {
                     alert(data.message);
