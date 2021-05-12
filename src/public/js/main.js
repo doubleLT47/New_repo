@@ -61,4 +61,13 @@
     });
   });
 
+  // Hiện input đường dẫn video 
+  $(".btn-youtube").click(function() {
+      $(".ytlink-input").toggle();
+  });
+
+  $(".btn-youtube-main").click(function() {
+    $(".ytlink-input").show();
+});
+
     
