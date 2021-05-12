@@ -205,8 +205,28 @@
                 html +=`<div class="card-body pt-0 pb-0">`
                     html +=`<blockquote class="blockquote mb-0 ">`
                         html +=`<p>${post.caption}</p>`
+                        html +=`<div class="row">`
+                            if (post.image !== '') {
+                                html +=`<div class="col-sm-2 col-xs-2"></div>`
+                                html +=`<div class="col-sm-8 col-xs-8 p-0"> `
+                                    html +=`<div class="card-body p-1"> `
+                                        html +=`<img class="luan-post-img" height="400px" src="/${post.image}"`
+                                    html +=`</div>`
+                                html +=`</div>`
+                            }
+                        html +=`</div>`
+                        html +=`<div class="row">`
+                            if (post.video !== ''){
+                                html +=`<div class="col-sm-2 col-xs-2"></div>`
+                                html +=`<div class="col-sm-8 col-xs-8 p-0"> `
+                                    html +=`<div class="card-body p-1"> `
+                                        html +=`<iframe width="100%"  src="${post.video}"></iframe>`
+                                    html +=`</div>`
+                                html +=`</div>`
+                            }
+                        html +=`</div>`
                         html += `<footer class="blockquote-footer">`
-                            html +=` Someone famous in <cite title="Source Title">Source Title</cite>`
+                            html +=`<cite title="Source Title"></cite>`
                         html +=`</footer>`
                     html +=`</blockquote>`
                 html +=`</div>`
@@ -226,13 +246,16 @@
 
            
             html +=`<div class="collapse" id="luan${post._id}">`
-                html +=`<div class="card card-body mb-0" id="luannt${post._id}">`
+                html +=`<div class="card card-body mb-0" >`
                     html +=`<div class="pl-2 d-flex luan-comment">`
                         html +=`<img class="avatar-comment mt-1 mr-2" src="${post.userAvatar}" alt="">`
                         html +=`<input type="text" name="comment" id="cmt${post._id}"  class="form-control rounded  col-lg-11 col-md-10 col-sm-8 mt-1" placeholder="Viết bình luận ...">`
                         html += `<button type="button" data-user="{{user._id}}" data-id="${post._id}" onclick="sendComment(this)" class="btn btn-light"><i class="far fa-paper-plane"></i></button>`
                     html +=`</div>`
+                    html +=`<div class="" id="luannt${post._id}">`
+                    html +=`</div>`
                 html +=`</div>`
+                
             html +=`</div>`
 
             getComment(post._id);

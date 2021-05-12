@@ -1,6 +1,6 @@
 
 module.exports = function CheckEmail(req, res, next) {
-    const {email} = req.body;
+    const email = req.user._json.email;;
 
     if (email.search('@student.tdtu.edu.vn') < 0) {
         req.app.set('err', 'Tài khoản phải là tài khoản sinh viên trường Tôn Đức Thắng')
