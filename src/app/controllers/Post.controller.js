@@ -29,7 +29,7 @@ class Post {
             })
     }
 
-    async showListPosts(req, res, next) {
+    showListPosts(req, res, next) {
         let data = [];
         let page = parseInt(req.query.page) || 1;
         var skip = (page -1)*PAGE_SIZE;
@@ -55,10 +55,10 @@ class Post {
                     
                     let acc = await UserAccount.findOne({_id: post.userID});
                     
-                    let {_id, caption,image, thematic, userID, createAt} = post;
+                    let {_id, caption,image, video, thematic, userID, createAt} = post;
                     
                     let userName = acc.fullname, userAvatar = acc.avatar;
-                    var obj = {_id, caption, image, thematic, userID, createAt, userName, userAvatar};
+                    var obj = {_id, caption, image, video, thematic, userID, createAt, userName, userAvatar};
                     data.push(obj); 
                     if (index === i - 1) {
                         res.send(JSON.stringify(data));
@@ -66,6 +66,19 @@ class Post {
                 })
             })
             .catch((err)=> res.status(500).json({err: "Server not responding!"}));
+    }
+
+    deleteOnePost(req, res) {
+        postModel.deleteOne({_id: req.params.id})
+            .then(() => {
+                if (req.user.level === 'admin') {
+                    res.redirect('/admin/posts');
+                }
+                else {
+                    res.json({message: `Đã xóa bài post ${req.params.id} thành công`})
+                }
+            })
+            .catch((err) => res.status(500).json({err: "Cannot delete the post!"}))
     }
         
 }

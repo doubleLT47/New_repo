@@ -31,10 +31,10 @@ class Comment {
                 comments.map(async (cmt, index) => {
                     let acc = await UserAccount.findOne({_id: cmt.userID});
                     
-                    let {_id, content,postID, userID} = cmt;
+                    let {_id, content,postID, userID, createAt} = cmt;
                     
                     let userName = acc.fullname, userAvatar = acc.avatar;
-                    var obj = {_id, content,postID, userID, userName, userAvatar};
+                    var obj = {_id, content,postID, userID, userName, userAvatar, createAt};
                     data.push(obj); 
                     if (index === i - 1) {
                         res.send(JSON.stringify(data));

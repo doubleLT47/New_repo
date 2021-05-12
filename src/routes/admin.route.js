@@ -20,4 +20,9 @@ router.get('/register',checkLogin, checkAdmin, adminController.register)
 router.post('/register',checkLogin, checkAdmin, upload.single('avatar'), adminController.handleRegister);
 router.delete('/:id',checkLogin, checkAdmin, adminController.deleteOneUser);
 
+router.get('/posts',checkLogin, checkAdmin, adminController.showAllPosts);
+router.get('/notifications',checkLogin, checkAdmin, adminController.showAllNotifications);
+router.get('/comments',checkLogin, checkAdmin, adminController.showAllComments);
+
+
 module.exports = router;

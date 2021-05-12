@@ -1,6 +1,8 @@
 
 const bcrypt = require('bcrypt');
 const UserAccount = require('../model/userAccount');
+const postModel = require('../model/posts');
+const commentModel = require('../model/comments');
 
 const {validationResult} = require('express-validator');
 
@@ -69,6 +71,40 @@ class Admin {
             req.app.set('error', message)
             return res.redirect('/admin/register');
         }
+
+    }
+
+    showAllPosts(req, res, next) {
+
+        postModel.find({})
+        .then(posts => {
+            
+            let data = [];
+            let i =posts.length;
+            if (i !== 0) {
+                posts.map(async (post, index) => {
+                
+                    let acc = await UserAccount.findOne({_id: post.userID});
+                    
+                    let {_id, caption,image, video, thematic, userID, createAt} = post;
+                    
+                    let userName = acc.fullname, userEmail= acc.email;
+                    var obj = {_id, caption, image, video, thematic, userID, createAt, userName, userEmail};
+                    data.push(obj); 
+                    if (index === i - 1) {
+                        res.render('admin/allPosts', {posts: data});
+                    }
+                })
+            }
+            
+        })
+        .catch((err)=> res.status(500).json({err: "Server not responding!"}))
+    }
+    showAllComments(req, res) {
+
+    }
+
+    showAllNotifications (req, res) {
 
     }
 

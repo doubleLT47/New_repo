@@ -10,8 +10,8 @@
                     <div class="col-md-12">
                     <form class="mt-4" name="container-form" method="POST" action="/admin/handleDelete">
                         <div>
-                            <h3>Tất cả người dùng</h3>
-                            <a class="add-account-for-faculty" href="/admin/register">Thêm tài khoản cho khoa</a>
+                            <h3>Tất cả bình luận</h3>
+                            
                             <div class="mt-4 d-flex align-items-center">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="checkBox-all">
@@ -35,21 +35,22 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">
-                                    Tên người dùng
+                                    Người đăng bình luận
                                     
                                 </th>
                                 <th>
-                                    email
+                                    Email người dùng
                                 </th>
                                 <th scope="col">
-                                    Trình độ
+                                    ID bài post
                                     
                                 </th>
                                 
                                 <th scope="col">
-                                    Khoa
+                                    Nội dung
                                     
                                 </th>
+                                
                                 <th scope="col">
                                     Thời gian tạo
                                     
@@ -58,17 +59,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each users}}
+                            {{#each comments}}
                                 <tr>
                                     <td>
                                         <div class="form-check">
                                             <input class="form-check-input" name="dataIds[]" type="checkbox" value="{{this._id}}">
                                         </div>
                                     </td>
-                                    <td>{{this.fullname}}</td>
-                                    <td>{{this.email}}</td>
-                                    <td>{{this.level}}</td>
-                                    <td>{{this.faculty}}</td>
+                                    <td>{{this.userName}}</td>
+                                    <td>{{this.userEmail}}</td>
+                                    <td>{{this.postID}}</td>
+                                    <td>{{this.content}}</td>
                                     <td>{{this.createAt}}</td>
                                     <td>
                                         <a href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-data-modal" >Xóa</a>
@@ -78,7 +79,6 @@
                                 <tr>
                                     <td colspan="5" class="text-center">
                                         Chưa có người dùng nào!
-                                        <a href="/admin/register">Bấm vào đây để tạo người dùng.</a>
                                     </td>
                                 </tr>
                             {{/each}}
@@ -103,7 +103,7 @@
         <span aria-hidden="true">&times;</span>
       </div>
       <div class="modal-body">
-        <p>Bạn có chắc chắn muốn xóa người dùng này?.</p>
+        <p>Bạn có chắc chắn muốn xóa bình luận này?.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -135,7 +135,7 @@
         });  
         //When delete btn clicked
         btnDeleteData.onclick = () => {
-            deleteForm.action = '/admin/'+ dataId + '?_method=DELETE';
+            deleteForm.action = '/comment/'+ dataId + '?_method=DELETE';
             deleteForm.submit();
         }
 
