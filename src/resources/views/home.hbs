@@ -261,6 +261,7 @@
     var postId;
     var isClick = false;
     var luanAvatar ;
+    var temp;
     
     $(document).ready(function() { 
         var luanBtn = document.getElementById('luan-btn');
@@ -291,7 +292,6 @@
             var imageFile = document.getElementById('upload-photo').files;
             var video = document.getElementById('upload-video').value;
             video = video.slice(video.indexOf('?v=')+3);
-            console.log(video);
 
             var formData = new FormData();
             formData.append('caption', caption);
@@ -400,15 +400,12 @@
                             html +=`</div>`
                         }
                         
-                        html += `<footer class="blockquote-footer">`
-                            html +=`<cite title="Source Title"></cite>`
-                        html +=`</footer>`
                     html +=`</blockquote>`
                 html +=`</div>`
                 html +=`<div class="card-body pt-2 text-muted">`
                     html +=`<div class="d-flex ">`
-                        html +=`<div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>`
-                        html +=`<div class="ml-auto text-right" id="comment-count-${post._id}"> 20 Comments </div>`
+                        html +=`<div class="like-count"><i class="far fa-thumbs-up"></i></div>`
+                        html +=`<div class="ml-auto text-right" id="comment-count-${post._id}"></div>`
                     html +=`</div>`
                 html +=`</div>`
                 html +=`<hr class="mt-0 mb-1 ">`

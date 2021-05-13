@@ -11,6 +11,10 @@ class Auth {
     //[GET] login
     login(req, res) {
         let error = req.app.get('err');
+        let token = req.cookies.token;
+        if (token) {
+            res.redirect('/');
+        }
         res.render('login', {layout: false, error: error});
     }
 

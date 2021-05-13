@@ -13,7 +13,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <div class="d-flex flex-row">
-                                    <img class="avatar" src="/{{user.avatar}}" alt="">
+                                    <img class="avatar" id="luan-avatar" src="/{{user.avatar}}" alt="">
                                     <input readonly data-toggle="modal" data-target="#modal-post"
                                         class="ml-2 form-control mt-1 post-box text-left"
                                         placeholder="Bạn đang nghĩ gì ?">
@@ -42,11 +42,7 @@
            
             </div>
               <!-- Announce -->
-               <div class="col-xl-4 col-md-0 col-0">
-
-                   <div class="announce"> sda </div>
-
-                </div>
+               
                 <!--End  Announce -->
         </div>
 
@@ -90,7 +86,7 @@
 
                         </div>
                     </div>
-                        <input class="ml-2 form-control mt-1 ytlink-input text-left" name="ytlink-input"  placeholder="Thêm đường dẫn video tại đây ">
+                    <input type="text"  id="upload-video" class="ml-2 form-control mt-1 ytlink-input text-left" name="video"  placeholder="Thêm đường dẫn video tại đây ">
                     <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg" multiple id="upload-photo">
                     <div class="add-to-post mt-3">
                         {{#if (and user.thematic 'all')}}
@@ -143,15 +139,72 @@
 </div>
 <!-- End Modal  Post-->
 
+<!-- Modal  delete post-->
+<div class="modal fade" id="delete-post">
+    <div class="modal-dialog">
+        <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Xóa bài viết</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+        
+            <!-- Modal body -->
+            <div class="modal-body">
+                Bạn có chắc mình muốn xóa bài viết này?
+            </div>
+        
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btn-delete-data" class="btn btn-danger">Xóa bỏ</button>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+<!-- Modal  delete comment-->
+<div class="modal fade" id="delete-comment">
+    <div class="modal-dialog">
+        <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Xóa bình luân</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+        
+            <!-- Modal body -->
+            <div class="modal-body">
+                Bạn có chắc mình muốn xóa bình luận này?
+            </div>
+        
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btn-delete-cmt" class="btn btn-danger">Xóa bỏ</button>
+            </div>
+        
+        </div>
+    </div>
+</div>
 
 <script>
     var postPage = 1;
     var disabledLoadMore = false;
     var userId;
+    var deleteID;
+    var postId;
+    var isClick = false;
+    var luanAvatar ;
     
     $(document).ready(function() {
         var luanBtn = document.getElementById('luan-btn');
         userId = luanBtn.getAttribute("data-id");
+        luanAvatar = document.getElementById('luan-avatar').getAttribute("src");
+
         getPosts();
     });
 
@@ -160,9 +213,7 @@
         var heightWindow = $(this).height();
         var documentHeight = $(document).height();
         if (Math.round(heightWindow + scrollTop) >= documentHeight -100 ){
-            console.log(disabledLoadMore)
             if (!disabledLoadMore ) {
-                console.log(disabledLoadMore);
                 loadMore();
             }
             
@@ -176,8 +227,9 @@
         button.onclick = (event) => {
             var caption = document.getElementById('post-caption').value;
             var imageFile = document.getElementById('upload-photo').files;
-            var video = document.getElementById('upload-video').value;
+            var video = document.getElementById('upload-video').value || '';
             var thematic = document.getElementById('exampleFormControlSelect1').value;
+            video = video.slice(video.indexOf('?v=')+3);
 
             var formData = new FormData();
             formData.append('caption', caption);
@@ -195,10 +247,30 @@
                 processData: false,
                 success: function (data) {
                     alert(data.message);
+                    $('#modal-post').modal('hide');
+                    $('#new-feed').empty();
                     getPosts();
                 }
             });
-        } 
+        }
+        $('#delete-post').on('show.bs.modal', function (e) {
+            var li = $(e.relatedTarget) ;
+            deleteID = li.data('id');
+        });
+
+        $('#btn-delete-data').click(()=> {
+            deletePost(deleteID)
+        });
+
+        $('#delete-comment').on('show.bs.modal', function (e) {
+            var span = $(e.relatedTarget) ;
+            deleteID = span.data('id');
+            postId = span.data('post');
+        });
+
+        $('#btn-delete-cmt').click(()=> {
+            deleteComment(deleteID, postId)
+        }); 
     });
 
     function getPosts(page) {
@@ -209,7 +281,6 @@
             method: "GET",
             dataType: "json",
             success: function (data) {
-                console.log(data);
                 if (data.length === 0) {
                     disabledLoadMore = true;
                 }
@@ -226,25 +297,49 @@
         $.each(posts, function(index, post) {
             if (post.userID === id) {
                html += `<div class="card mt-1 luan-card">`
-                html +=`<div class="card-header pb-0">`
+                html +=`<div class="card-header pb-0 d-flex">`
                     html +=`<img class="avatar" src="/${post.userAvatar}" alt="">`
                     html +=`<div class="pl-2 d-flex flex-column">`
                         html +=`<p class="avatar-name"> ${post.userName}</h5>`
                         html +=`<p class="p-0 post-date">${moment(post.createAt).fromNow()}</p>`
                     html += `</div>`
+                    html +=`<div class="card-header-wrap ml-auto" data-id="${post._id}" onClick="showOption(this)">`
+                        html +=`<i class="fas fa-ellipsis-v"></i>`
+                        html +=`<ul class="option-list-event" id="option${post._id}">`
+                            html +=`<li class="option-list-event-item" data-id="${post._id}" onClick="editPost(this)"> Sửa </li>`
+                            html +=`<li class="option-list-event-item" data-id="${post._id}" data-toggle="modal" data-target="#delete-post"> Xóa </li>`
+                        html +=`</ul>`
+                    html +=`</div>`
                 html +=`</div>`
                 html +=`<div class="card-body pt-0 pb-0">`
                     html +=`<blockquote class="blockquote mb-0 ">`
                         html +=`<p>${post.caption}</p>`
-                        html += `<footer class="blockquote-footer">`
-                            html +=` Someone famous in <cite title="Source Title">Source Title</cite>`
-                        html +=`</footer>`
+                        if (post.image !== '') {
+                            html +=`<div class="row">`
+                                html +=`<div class="col-sm-2 col-xs-2"></div>`
+                                html +=`<div class="col-sm-8 col-xs-8 p-0"> `
+                                    html +=`<div class="card-body p-1"> `
+                                        html +=`<img class="luan-post-img" height="400px" src="/${post.image}">`
+                                    html +=`</div>`
+                                html +=`</div>`
+                            html +=`</div>`
+                        }
+                        if (post.video !== ''){
+                            html +=`<div class="row">`
+                                html +=`<div class="col-sm-2 col-xs-2"></div>`
+                                html +=`<div class="col-sm-8 col-xs-8 p-0"> `
+                                    html +=`<div class="card-body p-1"> `
+                                        html +=`<iframe class="luan-post-video" src="https://www.youtube.com/embed/${post.video}" frameborder="0" allowfullscreen></iframe>`
+                                    html +=`</div>`
+                                html +=`</div>`
+                            html +=`</div>`
+                        }
                     html +=`</blockquote>`
                 html +=`</div>`
                 html +=`<div class="card-body pt-2 text-muted">`
                     html +=`<div class="d-flex ">`
                         html +=`<div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>`
-                        html +=`<div class="ml-auto text-right"> 20 Comments </div>`
+                        html +=`<div class="ml-auto text-right" id="comment-count-${post._id}"></div>`
                     html +=`</div>`
                 html +=`</div>`
                 html +=`<hr class="mt-0 mb-1 ">`
@@ -257,11 +352,13 @@
 
            
             html +=`<div class="collapse" id="luan${post._id}">`
-                html +=`<div class="card card-body mb-0" id="luannt${post._id}">`
+                html +=`<div class="card card-body mb-0">`
                     html +=`<div class="pl-2 d-flex luan-comment">`
-                        html +=`<img class="avatar-comment mt-1 mr-2" src="${post.userAvatar}" alt="">`
+                        html +=`<img class="avatar-comment mt-1 mr-2" src="${luanAvatar}" alt="">`
                         html +=`<input type="text" name="comment" id="cmt${post._id}"  class="form-control rounded  col-lg-11 col-md-10 col-sm-8 mt-1" placeholder="Viết bình luận ...">`
                         html += `<button type="button" data-user="{{user._id}}" data-id="${post._id}" onclick="sendComment(this)" class="btn btn-light"><i class="far fa-paper-plane"></i></button>`
+                    html +=`</div>`
+                    html +=`<div class="" id="luannt${post._id}">`
                     html +=`</div>`
                 html +=`</div>`
             html +=`</div>`
@@ -277,7 +374,6 @@
         let id = btn.getAttribute('data-id');
         let content = document.getElementById('cmt'+id);
         let idUser = btn.getAttribute('data-user');
-        console.log(id);
 
         if (content.value === '') {
             alert('Bạn chưa bình luận điều gì!');
@@ -300,6 +396,7 @@
                 success: function (cmt) {
                     alert('đã cmt');
                     content.value = '';
+                    $("#luannt"+id).empty();
                     getComment(id);
                 }
                 , error: function (err) {
@@ -315,6 +412,7 @@
             method: "GET",
             dataType: "json",
             success: function (data) {
+                $(`#comment-count-${postID}`).html(''+data.length+' comments');
                 renderComment(data, postID);
             }
         })
@@ -330,12 +428,62 @@
                         html+= `${comment.content}`
                     html+= `</div>`
                 html +=`</div>`
+                if (comment.userID === userId) {
+                    html +=`<div class="comment-wrap">`
+                        html +=`<i class="fas fa-ellipsis-h"></i>`
+                        html += `<span class="comment-option-item" data-id="${comment._id}" data-post="${comment.postID}" data-toggle="modal" data-target="#delete-comment"">Xóa</span>`
+                    html += `</div>`
+                }
             html +=`</div>`
          });
         $("#luannt"+id).append(html);
     }
+
     function loadMore() {
         postPage++;
         getPosts(postPage);
+    }
+
+    function showOption(btn) {
+        let id = btn.getAttribute('data-id');
+        if(!isClick) {
+            $(`#option${id}`).css('display', 'block');
+            isClick = true;
+        }
+        else {
+            $(`#option${id}`).css('display', 'none');
+            isClick = false;
+        }
+    }
+
+    function deletePost(id) {
+        const URL = `/post/${id}`;
+        $.ajax({
+            url: URL,
+            method: "DELETE",
+            dataType: "json",
+            success: function (data) {
+                alert(data.message);
+                $('#delete-post').modal('hide');
+                $('#new-feed').empty();
+                getPosts();
+            }
+        })
+   
+    }
+
+    function deleteComment(id,post) {
+        const URL = `/comment/${id}`;
+        $.ajax({
+            url: URL,
+            method: "DELETE",
+            dataType: "json",
+            success: function (data) {
+                alert(data.message);
+                $('#delete-comment').modal('hide');
+                $("#luannt"+post).empty();
+                getComment(post);
+            }
+        })
     }
 </script>
