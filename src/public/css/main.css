@@ -544,10 +544,12 @@ hr {
 
 .header .header-container .nav-left .user-profile .profile-img, .header .header-container .nav-right .user-profile .profile-img {
   width: 40px;
+  height: 40px;
   border-radius: 50%;
   margin-top: 12px;
   float: left;
 }
+
 
 .header .header-container .nav-left .notifications,
 .header .header-container .nav-right .notifications {
@@ -3234,6 +3236,10 @@ small {
   overflow: hidden;
 }
 
+.avatar-user-custom img {
+  width: 100%;
+}
+
 a.change-password {
   color: #fff;
 }
@@ -3419,34 +3425,91 @@ ul.announce li:hover {
 .card-header-wrap {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  white-space: nowrap;
-  overflow: hidden;
   position: relative;
 }
 
-.card-header-wrap:hover {
+
+.card-header-wrap i {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 19px;
+  padding-top: 10px;
+  border-radius: 50%;
+}
+
+.card-header-wrap i:hover {
   background-color: #d8f0f7;
   cursor: pointer;
 }
 
-.card-header-wrap i {
-  width: 100%;
-  text-align: center;
-  font-size: 19px;
-  margin-top: 10px;
-}
-
 .option-list-event {
+  display: none;
   position: absolute;
   top: calc(100% + 4px);
   right: 0;
   border-radius: 2px;
   width: 80px;
+  z-index: 1;
   list-style: none;
   box-shadow: 0 1px 2px #e0e0e0;
 }
 
 .option-list-event li {
   color: #000;
+  padding-left:5px;
+}
+
+.option-list-event li:hover {
+  font-weight: bold;
+}
+
+.comment-wrap {
+  display: none;
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 30px;
+  height: 30px;
+  position: relative;
+}
+
+.comment-wrap i {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 10px;
+  padding-top: 10px;
+  border-radius: 50%;
+  background-color: #d8f0f7;
+  cursor: pointer;
+}
+
+.luan-custom-comment:hover .comment-wrap {
+  display: block;
+}
+
+.comment-option-item {
+  margin-top:5px;
+  border: 1px solid #d8f0f7;
+  border-radius: 3px;
+  display: none;
+}
+
+.comment-option-item:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.comment-wrap::after {
+  content: "";
+	display: block;
+	position: absolute;
+	top: 30px;
+	right: 0;
+	width: 100%;
+	height: 10px;
+}
+
+.comment-wrap:hover .comment-option-item {
+  display: block;
 }

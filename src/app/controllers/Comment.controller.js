@@ -45,6 +45,13 @@ class Comment {
             })
             .catch((err)=> res.status(500).json({err: "Server not responding!"}));
     }
+
+    deleteOneComment(req, res, next) {
+        console.log('abs '+req.params.id);
+        commentModel.deleteOne({_id: req.params.id})
+            .then(() => res.json({message: `Đã xóa bình luận có ${req.params.id} thành công !`}))
+            .catch((err)=> res.status(500).json({err: "Không thể xóa bình luận này"}));
+    }
         
 }
 

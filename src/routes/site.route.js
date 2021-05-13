@@ -14,7 +14,6 @@ const upload = multer({ dest: 'src/public/uploads/', fileFilter: (req,file,callb
         callback(null, true);
     }
     else callback(null, false);
-    console.log(file);
 }})
 
 router.get('/', checkLogin, checkStudent, siteController.index);

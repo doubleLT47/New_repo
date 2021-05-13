@@ -1,6 +1,10 @@
 
 const UserAccount = require('../model/userAccount');
 const bcrypt = require('bcrypt');
+const fs = require('fs-extra');
+
+
+const DIR = 'src/public/';
 
 class Site {
     //[GET] /index
@@ -28,13 +32,20 @@ class Site {
             })
     }
 
-    update(req, res, next) {
+    async update(req, res, next) {
         if (!req.file) {
             req.body.avatar = '';
         }
         else {
+            let user = await UserAccount.findOne({_id: req.params.id});
+            if (user.avatar !== '') {
+                fs.removeSync(DIR+user.avatar);
+            }
             req.body.avatar = req.file.path.split('\\').slice(2).join('\\');
         };
+
+        
+
         let password = '';
         let {email, fullname, faculty, avatar, thematic, level, gender} = req.body;
 

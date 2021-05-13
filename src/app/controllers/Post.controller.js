@@ -1,9 +1,12 @@
 
 const postModel = require('../model/posts');
 const UserAccount = require('../model/userAccount');
+const commentModel = require('../model/comments');
+const fs = require('fs-extra');
 
 
 const PAGE_SIZE = 5;
+const DIR = 'src/public/';
 
 class Post {
     //[GET] /index
@@ -33,13 +36,7 @@ class Post {
         let data = [];
         let page = parseInt(req.query.page) || 1;
         var skip = (page -1)*PAGE_SIZE;
-        // console.log(page, skip)
-        // var count = parseInt(await postModel.count({}));
         
-        // if (skip >= count-5 ) {
-        //     console.log("true")
-        //     return res.send(JSON.stringify(data));
-        // }
         
         postModel.find({})
             .sort({createAt: -1})
@@ -101,17 +98,28 @@ class Post {
             .catch((err)=> res.status(500).json({err: "Server not responding!"}));
     }
 
-    deleteOnePost(req, res) {
+    async deleteOnePost(req, res) {
+        let post = await postModel.findOne({_id: req.params.id});
+        if (post.image !== '') {
+            fs.removeSync(DIR+post.image);
+        }
+
         postModel.deleteOne({_id: req.params.id})
             .then(() => {
-                if (req.user.level === 'admin') {
-                    res.redirect('/admin/posts');
-                }
-                else {
-                    res.json({message: `Đã xóa bài post ${req.params.id} thành công`})
-                }
+                commentModel.deleteMany({postID: req.params.id})
+                .then(() => {
+                    console.log('oke khoong')
+                    if (req.user.level === 'admin') {
+                        res.redirect('/admin/posts');
+                    }
+                    else {
+                        res.json({message: `Đã xóa bài post ${req.params.id} thành công`})
+                    }
+                })
+                .catch((err) => res.status(500).json({err: "Cannot delete the post alo!"}))
+               
             })
-            .catch((err) => res.status(500).json({err: "Cannot delete the post!"}))
+            .catch((err) => res.status(500).json({err: "Cannot delete the post oke!"}))
     }
         
 }

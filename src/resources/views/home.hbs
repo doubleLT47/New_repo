@@ -13,7 +13,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <div class="d-flex flex-row">
-                                    <img class="avatar" src="/{{user.avatar}}" alt="">
+                                    <img class="avatar" id="luan-avatar" src="/{{user.avatar}}" alt="">
                                     <input readonly data-toggle="modal" data-target="#modal-post"
                                         class="ml-2 form-control mt-1 post-box text-left"
                                         placeholder="Bạn đang nghĩ gì ?">
@@ -200,10 +200,73 @@
 </div>
 <!-- End Modal  Post-->
 
+<!-- Modal  delete post-->
+<div class="modal fade" id="delete-post">
+    <div class="modal-dialog">
+        <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Xóa bài viết</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+        
+            <!-- Modal body -->
+            <div class="modal-body">
+                Bạn có chắc mình muốn xóa bài viết này?
+            </div>
+        
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btn-delete-data" class="btn btn-danger">Xóa bỏ</button>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+<!-- Modal  delete comment-->
+<div class="modal fade" id="delete-comment">
+    <div class="modal-dialog">
+        <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Xóa bình luân</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+        
+            <!-- Modal body -->
+            <div class="modal-body">
+                Bạn có chắc mình muốn xóa bình luận này?
+            </div>
+        
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btn-delete-cmt" class="btn btn-danger">Xóa bỏ</button>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+ 
 <script>
     var postPage = 1;
     var disabledLoadMore = false;
-    $(document).ready(function() {  
+    var userId;
+    var deleteID;
+    var postId;
+    var isClick = false;
+    var luanAvatar ;
+    
+    $(document).ready(function() { 
+        var luanBtn = document.getElementById('luan-btn');
+        userId = luanBtn.getAttribute("data-id"); 
+        luanAvatar = document.getElementById('luan-avatar').getAttribute("src");
+        
         getPosts(1);
     });
 
@@ -212,9 +275,7 @@
         var heightWindow = $(this).height();
         var documentHeight = $(document).height();
         if (Math.round(heightWindow + scrollTop) >= documentHeight -100 ){
-            console.log(disabledLoadMore)
             if (!disabledLoadMore ) {
-                console.log(disabledLoadMore);
                 loadMore();
             }
             
@@ -247,13 +308,34 @@
                 contentType: false, 
                 processData: false,
                 success: function (data) {
+                     
                     alert(data.message);
+                    $('#modal-post').modal('hide');
                     $('#new-feed').empty();
                     getPosts();
+                   
                 }
             });
         }
-    
+
+        $('#delete-post').on('show.bs.modal', function (e) {
+            var li = $(e.relatedTarget) ;
+            deleteID = li.data('id');
+        });
+
+        $('#btn-delete-data').click(()=> {
+            deletePost(deleteID)
+        });
+
+        $('#delete-comment').on('show.bs.modal', function (e) {
+            var span = $(e.relatedTarget) ;
+            deleteID = span.data('id');
+            postId = span.data('post');
+        });
+
+        $('#btn-delete-cmt').click(()=> {
+            deleteComment(deleteID, postId)
+        });
     });
 
     function getPosts(page) {
@@ -263,7 +345,6 @@
             method: "GET",
             dataType: "json",
             success: function (data) {
-                console.log(data);
                 if (data.length === 0) {
                     disabledLoadMore = true;
                 }
@@ -283,13 +364,17 @@
                         html +=`<p class="avatar-name"> ${post.userName}</h5>`
                         html +=`<p class="p-0 post-date">${moment(post.createAt).fromNow()}</p>`
                     html += `</div>`
-                    html +=`<div class="card-header-wrap ml-auto">`
-                        html +=`<i class="fas fa-ellipsis-v"></i>`
-                        html +=`<ul class="option-list-event">`
-                            html +=`<li class="option-list-event-item"> Sửa </li>`
-                            html +=`<li class="option-list-event-item"> Xóa </li>`
-                        html +=`</ul>`
-                    html +=`</div>`
+
+                    if (userId === post.userID) {
+                        html +=`<div class="card-header-wrap ml-auto" data-id="${post._id}" onClick="showOption(this)">`
+                            html +=`<i class="fas fa-ellipsis-v"></i>`
+                            html +=`<ul class="option-list-event" id="option${post._id}">`
+                                html +=`<li class="option-list-event-item" data-id="${post._id}" onClick="editPost(this)"> Sửa </li>`
+                                html +=`<li class="option-list-event-item" data-id="${post._id}" data-toggle="modal" data-target="#delete-post"> Xóa </li>`
+                            html +=`</ul>`
+                        html +=`</div>`
+                    }
+                    
                 html +=`</div>`
                 html +=`<div class="card-body pt-0 pb-0">`
                     html +=`<blockquote class="blockquote mb-0 ">`
@@ -338,7 +423,7 @@
             html +=`<div class="collapse" id="luan${post._id}">`
                 html +=`<div class="card card-body mb-0" >`
                     html +=`<div class="pl-2 d-flex luan-comment">`
-                        html +=`<img class="avatar-comment mt-1 mr-2" src="${post.userAvatar}" alt="">`
+                        html +=`<img class="avatar-comment mt-1 mr-2" src="${luanAvatar}" alt="">`
                         html +=`<input type="text" name="comment" id="cmt${post._id}"  class="form-control rounded  col-lg-11 col-md-10 col-sm-8 mt-1" placeholder="Viết bình luận ...">`
                         html += `<button type="button" data-user="{{user._id}}" data-id="${post._id}" onclick="sendComment(this)" class="btn btn-light"><i class="far fa-paper-plane"></i></button>`
                     html +=`</div>`
@@ -358,7 +443,6 @@
         let id = btn.getAttribute('data-id');
         let content = document.getElementById('cmt'+id);
         let idUser = btn.getAttribute('data-user');
-        console.log(id);
 
         if (content.value === '') {
             alert('Bạn chưa bình luận điều gì!');
@@ -379,7 +463,7 @@
                 contentType: "application/x-www-form-urlencoded",
                 dataType: 'json',
                 success: function (cmt) {
-                    alert('đã cmt');
+                    alert(cmt.message);
                     content.value = '';
                     $("#luannt"+id).empty();
                     getComment(id);
@@ -405,7 +489,7 @@
     function renderComment(comments, id) {
         let html ='';
          $.each(comments, function(index, comment) {
-            html +=`<div class="pl-2 d-flex flex-row  align-items-start mt-2">`
+            html +=`<div class="pl-2 d-flex flex-row  align-items-start mt-2 luan-custom-comment">`
                 html +=`<img class="avatar-comment mt-2 " src="/${comment.userAvatar}" >`
                 html +=`<div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > `
                     html +=`<span class="font-weight-bold" >${comment.userName}</span> <span class="float-right post-date">${moment(comment.createAt).fromNow()}</span>`
@@ -413,6 +497,12 @@
                         html+= `${comment.content}`
                     html+= `</div>`
                 html +=`</div>`
+                if (comment.userID === userId) {
+                    html +=`<div class="comment-wrap">`
+                        html +=`<i class="fas fa-ellipsis-h"></i>`
+                        html += `<span class="comment-option-item" data-id="${comment._id}" data-post="${comment.postID}" data-toggle="modal" data-target="#delete-comment"">Xóa</span>`
+                    html += `</div>`
+                }
             html +=`</div>`
          });
         $("#luannt"+id).append(html);
@@ -420,5 +510,48 @@
     function loadMore() {
         postPage++;
         getPosts(postPage);
+    }
+
+    function showOption(btn) {
+        let id = btn.getAttribute('data-id');
+        if(!isClick) {
+            $(`#option${id}`).css('display', 'block');
+            isClick = true;
+        }
+        else {
+            $(`#option${id}`).css('display', 'none');
+            isClick = false;
+        }
+    }
+
+    function deletePost(id) {
+        const URL = `/post/${id}`;
+        $.ajax({
+            url: URL,
+            method: "DELETE",
+            dataType: "json",
+            success: function (data) {
+                alert(data.message);
+                $('#delete-post').modal('hide');
+                $('#new-feed').empty();
+                getPosts();
+            }
+        })
+   
+    }
+
+    function deleteComment(id,post) {
+        const URL = `/comment/${id}`;
+        $.ajax({
+            url: URL,
+            method: "DELETE",
+            dataType: "json",
+            success: function (data) {
+                alert(data.message);
+                $('#delete-comment').modal('hide');
+                $("#luannt"+post).empty();
+                getComment(post);
+            }
+        })
     }
 </script>

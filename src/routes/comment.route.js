@@ -7,5 +7,6 @@ const checkLogin = require('../app/middlewares/CheckLogin');
 
 router.post('/api',checkLogin, commentController.createComment);
 router.get('/api/:id',checkLogin, commentController.showListComment)
+router.delete('/:id',checkLogin, commentController.deleteOneComment)
 
 module.exports = router;
