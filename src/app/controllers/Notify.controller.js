@@ -2,11 +2,13 @@
 
 class Notify {
     index(req,res){
-        return res.render('facultyList');
+        let user = req.user;
+        return res.render('notifies/facultyList', {user: user.toObject()});
     }
 
     viewAllNotify(req,res){
-        return res.render('allNotify');
+        let user = req.user;
+        return res.render('notifies/allNotify', {user: user.toObject()});
     }
   
     

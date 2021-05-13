@@ -16,8 +16,9 @@ class Admin {
     //[GET] /users
 
     showAllUsers(req, res, next) {
+        let user = req.user;
         UserAccount.find({})
-            .then(accs => res.render('admin/allUsers', {users: accs.map(acc => acc.toObject())}))
+            .then(accs => res.render('admin/allUsers', {users: accs.map(acc => acc.toObject()), user: user.toObject()}))
             .catch(next);
     }
     //[DELETE] /:id
@@ -28,7 +29,8 @@ class Admin {
     //[GET] register
     register (req, res, next) {
         let error = req.app.get('error');
-        res.render('admin/register', {error});
+        let user = req.user;
+        res.render('admin/register', {error, user: user.toObject()});
     }
     //[POST] /admin/register
     handleRegister (req, res) {
