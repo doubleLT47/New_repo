@@ -2992,12 +2992,12 @@ button:focus {
 .custom-input i{
   font-size: 23px;
 }
-
+/* 
 #upload-video{
   opacity: 0;
    position: absolute;
    z-index: -1;
-}
+} */
 
 #upload-photo{
   opacity: 0;
@@ -3404,4 +3404,49 @@ font-size: 14px;
 .luan-post-img {
   max-width: 100%;
   max-height: 400px;
+}
+
+.luan-post-video {
+  width: 100%;
+  height: 400px;
+}
+
+ul.announce li:hover {
+  background-color: #ecf6f8;
+  padding-left: 5px;
+}
+
+.card-header-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-header-wrap:hover {
+  background-color: #d8f0f7;
+  cursor: pointer;
+}
+
+.card-header-wrap i {
+  width: 100%;
+  text-align: center;
+  font-size: 19px;
+  margin-top: 10px;
+}
+
+.option-list-event {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  border-radius: 2px;
+  width: 80px;
+  list-style: none;
+  box-shadow: 0 1px 2px #e0e0e0;
+}
+
+.option-list-event li {
+  color: #000;
 }

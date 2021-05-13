@@ -45,15 +45,15 @@
                 <!-- End Post -->
                 <!-- Announce -->
                <div class="col-xl-4 col-md-0 col-0 pl-0">
-                    <div class="position-fixed announce">
+                    <ul class="position-fixed announce">
                          
                         <div class="d-flex flex-row announce-head justify-content-center">
                                 <h2 class="float-center text-light font-weight-bold ">Thông báo mới</h2>
-                                <a href="#" style="text-decoration-line: underline " class="ml-2 font-weight-bold text-warning">Xem tất cả</a>
+                                <a href="/notify/all" style="text-decoration-line: underline " class="ml-2 font-weight-bold text-warning">Xem tất cả</a>
                         </div>
                         <hr style="width: 90%;" class=" mt-0 mb-2">
                   
-                        <div class="announce-detail mb-2">
+                        <li class="announce-detail mb-2">
                                 <div class="d-flex flex-row ml-2 announce-faculty">
                                     <span> [  Phòng đại học ]  </span>
                                     <span class="ml-2"> - </span>
@@ -67,9 +67,9 @@
                                         Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
                                 </div>
                     
-                        </div>
+                        </li>
 
-                         <div class="announce-detail mb-2">
+                        <li class="announce-detail mb-2">
                                 <div class="d-flex flex-row ml-2 announce-faculty">
                                     <span> [  Phòng đại học ]  </span>
                                     <span class="ml-2"> - </span>
@@ -83,9 +83,9 @@
                                         Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
                                 </div>
                     
-                        </div>
+                        </li>
 
-                         <div class="announce-detail mb-2">
+                         <li class="announce-detail mb-2">
                                 <div class="d-flex flex-row ml-2 announce-faculty">
                                     <span> [  Phòng đại học ]  </span>
                                     <span class="ml-2"> - </span>
@@ -99,9 +99,9 @@
                                         Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
                                 </div>
                     
-                        </div>
+                        </li>
 
-                         <div class="announce-detail mb-2">
+                         <li class="announce-detail mb-2">
                                 <div class="d-flex flex-row ml-2 announce-faculty">
                                     <span> [  Phòng đại học ]  </span>
                                     <span class="ml-2"> - </span>
@@ -115,11 +115,11 @@
                                         Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
                                 </div>
                     
-                        </div>
+                        </li>
 
                         
                     
-                    </div>
+                    </ul>
                    
                 </div>
                 <!--End  Announce -->
@@ -179,7 +179,7 @@
 
                         </div>
                     </div>
-                    <input readonly disabled="disabled" class="ml-2 form-control mt-1 ytlink-input text-left" name="ytlink-input"  placeholder="Thêm đường dẫn video tại đây ">
+                    <input type="text"  id="upload-video" class="ml-2 form-control mt-1 ytlink-input text-left" name="video"  placeholder="Thêm đường dẫn video tại đây ">
                     <input type="file" name="image"  accept="image/*" multiple id="upload-photo">
                     <div class="add-to-post mt-3">
                         <button type="button" class="btn btn-light btn-circle float-right" data-toggle="tooltip"
@@ -203,8 +203,7 @@
 <script>
     var postPage = 1;
     var disabledLoadMore = false;
-    $(document).ready(function() {
-        
+    $(document).ready(function() {  
         getPosts(1);
     });
 
@@ -229,12 +228,14 @@
         button.onclick = (event) => {
             var caption = document.getElementById('post-caption').value;
             var imageFile = document.getElementById('upload-photo').files;
-            //var video = document.getElementById('upload-video').value;
+            var video = document.getElementById('upload-video').value;
+            video = video.slice(video.indexOf('?v=')+3);
+            console.log(video);
 
             var formData = new FormData();
             formData.append('caption', caption);
             formData.append('image', imageFile[0]);
-            //formData.append('video', video);
+            formData.append('video', video);
             formData.append('thematic', '');
             formData.append('userID', id);
 
@@ -267,8 +268,6 @@
                     disabledLoadMore = true;
                 }
                 renderPost(data);
-            }, error: function (data) {
-                console.log(typeof data);
             }
         })
     }
@@ -278,36 +277,44 @@
 
         $.each(posts, function(index, post) {
             html += `<div class="card mt-1 luan-card">`
-                html +=`<div class="card-header pb-0">`
+                html +=`<div class="card-header pb-0 d-flex">`
                     html +=`<img class="avatar" src="/${post.userAvatar}" alt="">`
                     html +=`<div class="pl-2 d-flex flex-column">`
                         html +=`<p class="avatar-name"> ${post.userName}</h5>`
                         html +=`<p class="p-0 post-date">${moment(post.createAt).fromNow()}</p>`
                     html += `</div>`
+                    html +=`<div class="card-header-wrap ml-auto">`
+                        html +=`<i class="fas fa-ellipsis-v"></i>`
+                        html +=`<ul class="option-list-event">`
+                            html +=`<li class="option-list-event-item"> Sửa </li>`
+                            html +=`<li class="option-list-event-item"> Xóa </li>`
+                        html +=`</ul>`
+                    html +=`</div>`
                 html +=`</div>`
                 html +=`<div class="card-body pt-0 pb-0">`
                     html +=`<blockquote class="blockquote mb-0 ">`
                         html +=`<p>${post.caption}</p>`
-                        html +=`<div class="row">`
-                            if (post.image !== '') {
+                        if (post.image !== '') {
+                            html +=`<div class="row">`
                                 html +=`<div class="col-sm-2 col-xs-2"></div>`
                                 html +=`<div class="col-sm-8 col-xs-8 p-0"> `
                                     html +=`<div class="card-body p-1"> `
-                                        html +=`<img class="luan-post-img" height="400px" src="/${post.image}"`
+                                        html +=`<img class="luan-post-img" height="400px" src="/${post.image}">`
                                     html +=`</div>`
                                 html +=`</div>`
-                            }
-                        html +=`</div>`
-                        html +=`<div class="row">`
-                            if (post.video !== ''){
+                            html +=`</div>`
+                        }
+                        if (post.video !== ''){
+                            html +=`<div class="row">`
                                 html +=`<div class="col-sm-2 col-xs-2"></div>`
                                 html +=`<div class="col-sm-8 col-xs-8 p-0"> `
                                     html +=`<div class="card-body p-1"> `
-                                        html +=`<iframe width="100%"  src="${post.video}"></iframe>`
+                                        html +=`<iframe class="luan-post-video" src="https://www.youtube.com/embed/${post.video}" frameborder="0" allowfullscreen></iframe>`
                                     html +=`</div>`
                                 html +=`</div>`
-                            }
-                        html +=`</div>`
+                            html +=`</div>`
+                        }
+                        
                         html += `<footer class="blockquote-footer">`
                             html +=`<cite title="Source Title"></cite>`
                         html +=`</footer>`
@@ -316,7 +323,7 @@
                 html +=`<div class="card-body pt-2 text-muted">`
                     html +=`<div class="d-flex ">`
                         html +=`<div class="like-count"><i class="far fa-thumbs-up"></i> 890 </div>`
-                        html +=`<div class="ml-auto text-right"> 20 Comments </div>`
+                        html +=`<div class="ml-auto text-right" id="comment-count-${post._id}"> 20 Comments </div>`
                     html +=`</div>`
                 html +=`</div>`
                 html +=`<hr class="mt-0 mb-1 ">`
@@ -390,6 +397,7 @@
             method: "GET",
             dataType: "json",
             success: function (data) {
+                $(`#comment-count-${postID}`).html(''+data.length+' comments');
                 renderComment(data, postID);
             }
         })

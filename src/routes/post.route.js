@@ -15,7 +15,7 @@ const upload = multer({ dest: 'src/public/uploads/', fileFilter: (req,file,callb
 
 router.post('/:id', checkLogin, upload.single('image'), postController.createPost);
 router.get('/api', checkLogin, postController.showListPosts);
-router.delete('/:id', checkLogin, postController.deleteOnePost)
-
+router.get('/api/:id', checkLogin, postController.showListFacultyPosts);
+router.delete('/:id', checkLogin, postController.deleteOnePost);
 
 module.exports = router;

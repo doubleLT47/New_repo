@@ -68,6 +68,39 @@ class Post {
             .catch((err)=> res.status(500).json({err: "Server not responding!"}));
     }
 
+    showListFacultyPosts(req, res, next) {
+        let data = [];
+        let page = parseInt(req.query.page) || 1;
+        var skip = (page -1)*PAGE_SIZE;
+        
+        
+        postModel.find({userID: req.params.id})
+            .sort({createAt: -1})
+            .skip(skip)
+            .limit(PAGE_SIZE)
+            .then(posts => {                
+                let i = posts.length;
+                
+                if (i === 0) {
+                    res.send(JSON.stringify(data));
+                }
+                posts.map(async (post, index) => {
+                    
+                    let acc = await UserAccount.findOne({_id: post.userID});
+                    
+                    let {_id, caption,image, video, thematic, userID, createAt} = post;
+                    
+                    let userName = acc.fullname, userAvatar = acc.avatar;
+                    var obj = {_id, caption, image, video, thematic, userID, createAt, userName, userAvatar};
+                    data.push(obj); 
+                    if (index === i - 1) {
+                        res.send(JSON.stringify(data));
+                    }
+                })
+            })
+            .catch((err)=> res.status(500).json({err: "Server not responding!"}));
+    }
+
     deleteOnePost(req, res) {
         postModel.deleteOne({_id: req.params.id})
             .then(() => {

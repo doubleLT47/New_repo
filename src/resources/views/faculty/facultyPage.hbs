@@ -145,9 +145,29 @@
 
 
 <script>
+    var postPage = 1;
+    var disabledLoadMore = false;
+    var userId;
+    
     $(document).ready(function() {
+        var luanBtn = document.getElementById('luan-btn');
+        userId = luanBtn.getAttribute("data-id");
         getPosts();
     });
+
+    $(window).scroll(function() {
+        var scrollTop = $(this).scrollTop();
+        var heightWindow = $(this).height();
+        var documentHeight = $(document).height();
+        if (Math.round(heightWindow + scrollTop) >= documentHeight -100 ){
+            console.log(disabledLoadMore)
+            if (!disabledLoadMore ) {
+                console.log(disabledLoadMore);
+                loadMore();
+            }
+            
+        }
+    })
 
     document.addEventListener('DOMContentLoaded', () => {
         let button = document.getElementById('luan-btn');
@@ -181,14 +201,19 @@
         } 
     });
 
-    function getPosts() {
-        const URL = `http://localhost:8080/post/api`;
+    function getPosts(page) {
+        const URL = `/post/api/${userId}?page=${page}`;
+        
         $.ajax({
             url: URL,
             method: "GET",
             dataType: "json",
             success: function (data) {
-                renderPost(data)
+                console.log(data);
+                if (data.length === 0) {
+                    disabledLoadMore = true;
+                }
+                renderPost(data);
             }
         })
     }
@@ -308,5 +333,9 @@
             html +=`</div>`
          });
         $("#luannt"+id).append(html);
+    }
+    function loadMore() {
+        postPage++;
+        getPosts(postPage);
     }
 </script>
