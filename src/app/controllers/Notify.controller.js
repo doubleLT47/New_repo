@@ -1,4 +1,5 @@
 
+const notificationModel = require('../model/notifications');
 
 class Notify {
     index(req,res){
@@ -8,7 +9,11 @@ class Notify {
 
     viewAllNotify(req,res){
         let user = req.user;
-        return res.render('notifies/allNotify', {user: user.toObject()});
+        notificationModel.find({})
+            .sort({createAt: -1})
+            .then((notifies) => {
+                return res.render('notifies/allNotify', {user: user.toObject(), notices: notifies.map((notify) => notify.toObject())});
+            })
     }
   
     

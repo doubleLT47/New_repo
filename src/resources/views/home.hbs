@@ -123,6 +123,9 @@
                    
                 </div>
                 <!--End  Announce -->
+                <a href="" id="notification-to-user" class="alert alert-success d-inline position-fixed small" style="bottom: 20px; right: 20px">
+                    <strong></strong> vừa đăng bài viết mới
+                </a>
                 <!--End  Announce -->
             </div>
             <!-- Breadcrumb End -->
@@ -130,21 +133,6 @@
 
 
     </div>
-    <!-- Content Wrapper END -->
-
-    <!-- Footer START -->
-     
-      <footer class="content-footer">
-        <div class="footer">
-            <div class="copyright">
-                <span>Copyright © 2021 <b class="text-dark">TDTU</b>. All Right Reserved</span>
-                <span class="go-right">
-                    <a href="" class="text-gray">Term &amp; Conditions</a>
-                    <a href="" class="text-gray">Privacy &amp; Policy</a>
-                </span>
-            </div>
-        </div>
-    </footer>
 
 </div>
 
@@ -262,13 +250,23 @@
     var isClick = false;
     var luanAvatar ;
     var temp;
+    let socket;
     
     $(document).ready(function() { 
         var luanBtn = document.getElementById('luan-btn');
         userId = luanBtn.getAttribute("data-id"); 
         luanAvatar = document.getElementById('luan-avatar').getAttribute("src");
+        $('#notification-to-user').fadeTo(2000, 0)
         
         getPosts(1);
+
+        socket = io();
+        socket.on('connect', () => console.log("Kết nối thành công!"+socket.id))
+        socket.on('disconnect', () => console.log("Mất kết nối với server!"));
+        socket.on('notice-to-user', (data)=> {
+            console.log(data);
+            notifications(data);
+        })
     });
 
     $(window).scroll(function() {
@@ -489,7 +487,7 @@
             html +=`<div class="pl-2 d-flex flex-row  align-items-start mt-2 luan-custom-comment">`
                 html +=`<img class="avatar-comment mt-2 " src="/${comment.userAvatar}" >`
                 html +=`<div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > `
-                    html +=`<span class="font-weight-bold" >${comment.userName}</span> <span class="float-right post-date">${moment(comment.createAt).fromNow()}</span>`
+                    html +=`<span class="font-weight-bold" >${comment.userName}</span> <span class="float-right post-date ml-4">${moment(comment.createAt).fromNow()}</span>`
                     html +=`<div >`
                         html+= `${comment.content}`
                     html+= `</div>`
@@ -550,5 +548,13 @@
                 getComment(post);
             }
         })
+    }
+    function notifications(data) {
+        $('#notification-to-user strong').html(data.userName);
+        $('#notification-to-user').attr('href', `/post/detail/${data.id}`);
+        $('#notification-to-user').fadeTo(2000,1);
+        setTimeout(()=> {
+             $('#notification-to-user').fadeTo(2000, 0)
+        }, 6000);
     }
 </script>

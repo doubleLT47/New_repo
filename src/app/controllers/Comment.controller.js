@@ -19,7 +19,6 @@ class Comment {
     }
 
     showListComment(req, res, next) {
-        console.log(req.params.id);
         commentModel.find({postID: req.params.id})
             .sort({createAt: -1})
             .then(comments => {
@@ -47,7 +46,6 @@ class Comment {
     }
 
     deleteOneComment(req, res, next) {
-        console.log('abs '+req.params.id);
         commentModel.deleteOne({_id: req.params.id})
             .then(() => res.json({message: `Đã xóa bình luận có ${req.params.id} thành công !`}))
             .catch((err)=> res.status(500).json({err: "Không thể xóa bình luận này"}));

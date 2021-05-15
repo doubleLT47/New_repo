@@ -17,5 +17,6 @@ router.post('/:id', checkLogin, upload.single('image'), postController.createPos
 router.get('/api', checkLogin, postController.showListPosts);
 router.get('/api/:id', checkLogin, postController.showListFacultyPosts);
 router.delete('/:id', checkLogin, postController.deleteOnePost);
+router.get('/detail/:id', checkLogin, postController.postDetail)
 
 module.exports = router;

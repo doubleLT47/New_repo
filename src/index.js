@@ -1,6 +1,12 @@
 
 require('dotenv').config();
+
 const express = require('express');
+const app = express();
+const http = require("http");
+
+const socketIo = require("socket.io");
+const server = http.createServer(app);
 const path = require('path');
 const morgan = require('morgan');
 const exphbs  = require('express-handlebars');
@@ -13,8 +19,10 @@ const db = require('./config/db');
 
 db.connect(); 
 
-const app = express();
+
 const port = process.env.PORT || 8008;
+
+const io = socketIo(server);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({
@@ -38,4 +46,18 @@ app.set('views',path.join(__dirname, 'resources/views'))
 // Route init
 route(app);
  
-app.listen(port, ()=> console.log(`Server is running at http://localhost:${port}`));
+server.listen(port, ()=> console.log(`Server is running at http://localhost:${port}`));
+
+
+io.on('connection', function(socket) {
+  console.log(`Client ${socket.id} connected`);
+
+  socket.on('disconnect', ()=> {
+    console.log(`${socket.id} disconnected`);
+  });
+
+  socket.on('notice-to-server', (data)=> {
+    console.log('abs' + data.userName, data.newId)
+    io.emit('notice-to-user', {userName: data.userName, id: data.newId});
+  })
+})

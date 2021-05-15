@@ -52,35 +52,20 @@
             </form>
 
             <div class="row">
-           
-                <div class="col-md-12 p-20  mt-2 notify-block-blue d-flex flex-column">
-                        <span class="notify-title">[DỰ KIẾN] LỊCH THI VÀ DANH SÁCH THI MOS ĐỢT THÁNG 05/2021 </span>
-                         <span class="notify-desc-blue">Sinh viên xem chi tiết trong file đính kèm. </span>
-                         <div class="d-flex flex-row">
-                            <a class="notify-link" href="#">Chi tiết thông báo</a>
-                            <span class="ml-auto">Phòng Đại học | Ngày đăng   07/05/2021</span>
-                         </div>
-                </div>
-
-                 <div class="col-md-12 p-20  mt-2 notify-block d-flex flex-column">
-
-                        <span class="notify-title">[DỰ KIẾN] LỊCH THI VÀ DANH SÁCH THI MOS ĐỢT THÁNG 05/2021 </span>
-                         <span class="notify-desc">Thông báo về thời gian triển khai lấy kết quả khảo sát "Sự hài lòng của sinh viên đối với chất lượng hoạt động của các đơn vị chức năng, Thư viện và Trường đại học Tôn Đức Thắng” năm 2021 </span>
-                         <div class="d-flex flex-row">
-                            <a class="notify-link" href="#">Chi tiết thông báo</a>
-                            <span class="ml-auto">Phòng Đại học | Ngày đăng   07/05/2021</span>
-                         </div>
-                </div>
-
-                 <div class="col-md-12 p-20  mt-2 notify-block-blue d-flex flex-column">
-
-                        <span class="notify-title">[DỰ KIẾN] LỊCH THI VÀ DANH SÁCH THI MOS ĐỢT THÁNG 05/2021 </span>
-                         <span class="notify-desc">Sinh viên xem chi tiết trong file đính kèm. </span>
-                         <div class="d-flex flex-row">
-                            <a class="notify-link" href="#">Chi tiết thông báo</a>
-                            <span class="ml-auto">Phòng Đại học | Ngày đăng   07/05/2021</span>
-                         </div>
-                </div>
+                {{#each notices}}
+                    <div class="col-md-12 p-20  mt-2 notify-block-blue d-flex flex-column luan-div">
+                            <span class="notify-title">{{this.userName}}</span>
+                            <span class="notify-desc-blue luan-notice">{{this.hint}}</span>
+                            <div class="d-flex flex-row">
+                                <a class="notify-link" href="/post/detail/{{this.postID}}">Chi tiết thông báo</a>
+                                <span class="ml-auto">Ngày đăng   {{this.createAt}}</span>
+                            </div>
+                    </div>
+                    {{else}}
+                    <divclass="text-center">
+                        Chưa có thông báo nào!
+                    </divclass=>
+                {{/each}}
               
                
             </div>

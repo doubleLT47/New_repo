@@ -2,6 +2,7 @@
 const postModel = require('../model/posts');
 const UserAccount = require('../model/userAccount');
 const commentModel = require('../model/comments');
+const notificationModel = require('../model/notifications');
 const fs = require('fs-extra');
 
 
@@ -11,7 +12,7 @@ const DIR = 'src/public/';
 class Post {
     //[GET] /index
     
-    createPost(req, res, next) {
+    async createPost(req, res, next) {
         if (!req.file ) {
             req.body.image = '';
         }
@@ -19,17 +20,22 @@ class Post {
             req.body.image = req.file.path.split('\\').slice(2).join('\\');
         }
 
-
+        let userName = '', pId = '';
         const {caption, image, thematic, video, userID} = req.body;
 
         let newPost = new postModel(req.body);
-        newPost.save()
-            .then(() =>{
-                res.status(200).json({message: 'Viết bài thành công', newPost: newPost});
-            })
-            .catch(err =>{
-                
-            })
+        await newPost.save();
+
+        if (req.user.level === 'faculty') {
+            let p = await postModel.findOne({caption, image, thematic, video, userID});
+            pId = p._id, userName = req.user.fullname;
+
+            console.log(pId, userName)
+
+            let newNotices = new notificationModel({postID: pId, userName: userName, hint: caption, thematic: thematic});
+            await newNotices.save();
+        }
+        res.status(200).json({message: 'Viết bài thành công', userName: userName, pId: pId});
     }
 
     showListPosts(req, res, next) {
@@ -120,6 +126,22 @@ class Post {
                
             })
             .catch((err) => res.status(500).json({err: "Cannot delete the post oke!"}))
+    }
+
+    postDetail(req, res) {
+        let user = req.user;
+        console.log(req.params.id)
+        postModel.findOne({_id: req.params.id})
+            .then(async (p) => {
+                let acc = await UserAccount.findOne({_id: p.userID});
+                    
+                let {_id, caption,image, video, thematic, userID, createAt} = p;
+                    
+                let userName = acc.fullname, userAvatar = acc.avatar;
+                var obj = {_id, caption, image, video, thematic, userID, createAt, userName, userAvatar};
+                res.render('detailPost', {user: user.toObject(), post: obj})
+            })
+            .catch((err) => res.status(500).json({err: "Cannot find post"}))
     }
         
 }

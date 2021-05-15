@@ -7,9 +7,9 @@
                 <!-- POST -->
 
                 <!--  Post -->
-                <div class="col-xl-8 col-md-12 col-12" id="new-feed">
+                <div class="col-xl-8 col-md-12 col-12">
                     <!-- Create Post -->
-                    <div class="card">
+                    <div class="card luan-mb-0">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <div class="d-flex flex-row">
@@ -36,7 +36,11 @@
                     
                 <!-- End Post -->
           
-             
+                <div class="row">
+                    <div class="col-md-12 col-sm-12" id="new-feed">
+
+                    </div>
+                </div>
            
            
            
@@ -199,13 +203,18 @@
     var postId;
     var isClick = false;
     var luanAvatar ;
+    var socket;
     
     $(document).ready(function() {
         var luanBtn = document.getElementById('luan-btn');
         userId = luanBtn.getAttribute("data-id");
         luanAvatar = document.getElementById('luan-avatar').getAttribute("src");
-
         getPosts();
+
+        socket = io();
+        socket.on('connect', () => console.log("Kết nối thành công!"+socket.id))
+        socket.on('disconnect', () => console.log("Mất kết nối với server!"))
+
     });
 
     $(window).scroll(function() {
@@ -247,9 +256,11 @@
                 processData: false,
                 success: function (data) {
                     alert(data.message);
+                    let userName = data.userName, newId = data.pId;
                     $('#modal-post').modal('hide');
                     $('#new-feed').empty();
                     getPosts();
+                    socket.emit('notice-to-server', {userName, newId});
                 }
             });
         }
@@ -423,7 +434,7 @@
             html +=`<div class="pl-2 d-flex flex-row  align-items-start mt-2">`
                 html +=`<img class="avatar-comment mt-2 " src="/${comment.userAvatar}" >`
                 html +=`<div style=" display: inline-block; background-color : #e6e7eb" class="rounded p-2 pr-3 ml-2  mt-2"  > `
-                    html +=`<span class="font-weight-bold" >${comment.userName}</span> <span class="float-right post-date">${moment(comment.createAt).fromNow()}</span>`
+                    html +=`<span class="font-weight-bold" >${comment.userName}</span> <span class="float-right post-date ml-4">${moment(comment.createAt).fromNow()}</span>`
                     html +=`<div >`
                         html+= `${comment.content}`
                     html+= `</div>`

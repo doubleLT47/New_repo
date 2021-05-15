@@ -3238,6 +3238,7 @@ small {
 
 .avatar-user-custom img {
   width: 100%;
+  height: 100%;
 }
 
 a.change-password {
@@ -3512,4 +3513,17 @@ ul.announce li:hover {
 
 .comment-wrap:hover .comment-option-item {
   display: block;
+}
+
+.luan-notice {
+  height: 25px;
+  white-space: nowrap; 
+  width: 100%; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.luan-div:hover {
+  background-color: #ecf6f8;
+  padding-left: 30px;
 }
