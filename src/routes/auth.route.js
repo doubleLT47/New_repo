@@ -4,7 +4,7 @@ const router = express.Router();
 const passport = require('passport');
 const multer = require('multer');
 
-const CheckEmail = require('../app/middlewares/CheckEmail')
+const checkEmail = require('../app/middlewares/CheckEmail')
 const upload = multer({ dest: 'src/public/uploads/', fileFilter: (req,file,callback) => {
     if (file.mimetype.startsWith('image/')) {
         callback(null, true);
@@ -21,7 +21,7 @@ router.get('/login', authController.login);
 router.post('/login', authController.handleLogin);
 
 router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/auth/login' }), authController.handleGoogleLogin);
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/auth/login' }), checkEmail, authController.handleGoogleLogin);
 router.get('/updateProfile', authController.updateProfile);
 router.post('/registerWithGoogle', upload.single('avatar'), authController.handleRegisterWithGoogle);
 

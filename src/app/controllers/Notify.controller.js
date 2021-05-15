@@ -1,7 +1,7 @@
 
 const notificationModel = require('../model/notifications');
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 
 class Notify {
     index(req,res){
