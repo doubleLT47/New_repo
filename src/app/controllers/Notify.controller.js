@@ -61,7 +61,11 @@ class Notify {
             .catch((err) => res.json({message: 'server not responding'}))
     }
   
-    
+    deleteOneNotice(req, res, next) {
+        notificationModel.deleteOne({_id: req.params.id})
+            .then(() => res.redirect('/admin/notifications'))
+            .catch(next)
+    }
 }
 
 module.exports = new Notify;

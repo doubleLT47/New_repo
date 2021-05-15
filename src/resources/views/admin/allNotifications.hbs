@@ -1,0 +1,167 @@
+
+<div class="page-container">
+    <div class="main-content">
+        <div class="container-fluid">
+                <!-- Breadcrumb Start -->
+                <div class="row">
+                    <!-- POST -->
+
+                    <!--  Post -->
+                    <div class="col-md-12">
+                    <form class="mt-4" name="container-form" method="POST" action="/admin/handleDelete">
+                        <div>
+                            <h3>Tất cả thông báo</h3>
+                            
+                            <div class="mt-4 d-flex align-items-center">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkBox-all">
+                                    <label class="form-check-label" for="checkBox-all">
+                                        Chọn tất cả
+                                    </label>
+                                </div>
+                                <select class="form-control form-control-sm checkbox-select-all-options ml-2 p-0" id="exampleFormControlSelect1" name="action" required>
+                                    <option value="">-- Chọn hành động --</option>
+                                    <option value="delete">Xóa tất cả</option>
+                                </select>
+                                <button class="btn btn-primary btn-sm ml-2" disabled="disabled" id="btn-checked-submit">Áp dụng</button>
+                            
+                            </div>
+                        </div>
+                        <div>
+                            
+                        </div>
+                        <table class="table mt-4">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">
+                                    ID bài viết
+                                    
+                                </th>
+                                <th>
+                                    Người đăng bài
+                                </th>
+                                <th scope="col">
+                                    Nội dung
+                                    
+                                </th>
+                                
+                                <th scope="col">
+                                    Chủ đề
+                                    
+                                </th>
+                                
+                                <th scope="col">
+                                    Thời gian tạo
+                                    
+                                </th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each notices}}
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="dataIds[]" type="checkbox" value="{{this._id}}">
+                                        </div>
+                                    </td>
+                                    <td>{{this.postID}}</td>
+                                    <td>{{this.userName}}</td>
+                                    <td>{{this.hint}}</td>
+                                    <td>{{this.thematic}}</td>
+                                    <td>{{this.createAt}}</td>
+                                    <td>
+                                        <a href="" class="btn btn-link" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-data-modal" >Xóa</a>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        Chưa có người dùng nào!
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                        </table>
+                    </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+{{!-- confirm delete courses --}}
+
+<div class="modal" id="delete-data-modal" tabindex="-1" role="dialog" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa Người dùng?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+        <span aria-hidden="true">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc chắn muốn xóa thông báo này?.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" id="btn-delete-data" class="btn btn-danger">Xóa bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Delete Hidden Form --}}
+
+<form method="POST" id="delete-hidden-form"></form>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        var dataId;
+        var deleteForm = document.forms['delete-hidden-form'];
+        var btnDeleteData = document.getElementById('btn-delete-data');
+        var checkBoxAll = $('#checkBox-all');
+        var dataItemCheckbox = $('input[name="dataIds[]"]');
+        var checkedSubmitBtn =$('#btn-checked-submit');
+        var containerForm = $('form[name="container-form"]');
+
+        // when dialog confirm clicked
+        $('#delete-data-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) ;
+            dataId = button.data('id') ;
+        });  
+        //When delete btn clicked
+        btnDeleteData.onclick = () => {
+            deleteForm.action = '/notify/'+ dataId + '?_method=DELETE';
+            deleteForm.submit();
+        }
+
+        //checkbox all click
+        checkBoxAll.change(function (e) {
+            var isChecked = $(this).prop('checked');
+            dataItemCheckbox.prop('checked', isChecked);
+            renderCheckAllSubmitBtn()
+        })
+
+        //course Item Checkbox change
+        dataItemCheckbox.change(function (e) {
+            var isCheckedAll = dataItemCheckbox.length  === $('input[name="dataIds[]"]:checked').length;
+            checkBoxAll.prop('checked', isCheckedAll);
+            renderCheckAllSubmitBtn();
+        })
+
+        //Re-render check all submit button
+        function renderCheckAllSubmitBtn() {
+            var checkedCount = $('input[name="dataIds[]"]:checked').length;
+            if (checkedCount > 0) {
+                checkedSubmitBtn.attr('disabled', false);
+            }
+            else {
+                checkedSubmitBtn.attr('disabled', true);
+            }
+        }
+    });
+</script>

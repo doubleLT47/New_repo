@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const UserAccount = require('../model/userAccount');
 const postModel = require('../model/posts');
 const commentModel = require('../model/comments');
+const notificationModel = require('../model/notifications');
 
 const {validationResult} = require('express-validator');
 
@@ -102,12 +103,27 @@ class Admin {
         })
         .catch((err)=> res.status(500).json({err: "Server not responding!"}))
     }
-    showAllComments(req, res) {
-
+    showAllComments(req, res, next) {
+        let user = req.user;
+        let data = [];
+        commentModel.find({})
+            .then((comments) => {
+                comments.map(async (comment) => {
+                    let acc = await UserAccount.findOne({_id: comment.userID});
+                    let userName = acc.fullname, userEmail = acc.email;
+                    let {_id, content, postID, userID,createAt} = comment;
+                    let obj = {_id, content, postID, userID, createAt, userEmail, userName};
+                    data.push(obj);
+                    res.render('admin/allComments', {comments: data, user: user.toObject()})
+                })
+            })
+            .catch(next);
     }
 
     showAllNotifications (req, res) {
-
+        let user = req.user;
+        notificationModel.find({})
+            .then((notices) => res.render('admin/allNotifications', {notices: notices.map(notice => notice.toObject()), user: user.toObject()}))
     }
 
 }

@@ -9,4 +9,5 @@ router.get('/api', checkLogin, notifyController.showListNotice)
 router.get('/api/:thematic', checkLogin, notifyController.showNotifyWithThematic)
 router.get('/all',checkLogin, notifyController.viewNotify);
 router.get('/:thematic',checkLogin, notifyController.viewNotifyWithThematic);
+router.delete('/:id', checkLogin, notifyController.deleteOneNotice)
 module.exports = router;

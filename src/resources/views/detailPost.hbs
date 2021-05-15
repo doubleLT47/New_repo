@@ -9,64 +9,70 @@
                 <div class="col-xl-8 col-md-12 ">
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
-                            <div class="card mt-1 luan-card" data-id="{{post._id}}" id="luan-card">
-                                <div class="card-header pb-0 d-flex">
-                                    <img class="avatar" src="/{{post.userAvatar}}" alt="">
-                                    <div class="pl-2 d-flex flex-column">
-                                        <p class="avatar-name"> {{post.userName}}</h5>
-                                        <p class="p-0 post-date">{{post.createAt}}</p>
+                            {{#if post}}
+                                <div class="card mt-1 luan-card" data-id="{{post._id}}" id="luan-card">
+                                    <div class="card-header pb-0 d-flex">
+                                        <img class="avatar" src="/{{post.userAvatar}}" alt="">
+                                        <div class="pl-2 d-flex flex-column">
+                                            <p class="avatar-name"> {{post.userName}}</h5>
+                                            <p class="p-0 post-date">{{post.createAt}}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-body pt-0 pb-0">
-                                    <blockquote class="blockquote mb-0 ">
-                                        <p>{{post.caption}}</p>
-                                        
-                                        {{#if (not post.image '')}}
-                                            <div class="row">`
-                                                <div class="col-sm-2 col-xs-2"></div>
-                                                <div class="col-sm-8 col-xs-8 p-0"> 
-                                                    <div class="card-body p-1"> 
-                                                        <img class="luan-post-img" height="400px" src="/{{post.image}}">
+                                    <div class="card-body pt-0 pb-0">
+                                        <blockquote class="blockquote mb-0 ">
+                                            <p>{{post.caption}}</p>
+                                            
+                                            {{#if (not post.image '')}}
+                                                <div class="row">`
+                                                    <div class="col-sm-2 col-xs-2"></div>
+                                                    <div class="col-sm-8 col-xs-8 p-0"> 
+                                                        <div class="card-body p-1"> 
+                                                            <img class="luan-post-img" height="400px" src="/{{post.image}}">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        {{/if}}
-                                        {{#if (not post.video '')}}
-                                            <div class="row">`
-                                                <div class="col-sm-2 col-xs-2"></div>
-                                                <div class="col-sm-8 col-xs-8 p-0"> 
-                                                    <div class="card-body p-1"> 
-                                                        <iframe class="luan-post-video" src="https://www.youtube.com/embed/{{post.video}}" frameborder="0" allowfullscreen></iframe>
+                                            {{/if}}
+                                            {{#if (not post.video '')}}
+                                                <div class="row">`
+                                                    <div class="col-sm-2 col-xs-2"></div>
+                                                    <div class="col-sm-8 col-xs-8 p-0"> 
+                                                        <div class="card-body p-1"> 
+                                                            <iframe class="luan-post-video" src="https://www.youtube.com/embed/{{post.video}}" frameborder="0" allowfullscreen></iframe>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        {{/if}}
-                                    </blockquote>
-                                </div>
-                                <div class="card-body pt-2 text-muted">
-                                    <div class="d-flex ">
-                                        <div class="like-count"><i class="far fa-thumbs-up"></i> </div>
-                                        <div class="ml-auto text-right" id="comment-count-{{post._id}}"></div>
+                                            {{/if}}
+                                        </blockquote>
+                                    </div>
+                                    <div class="card-body pt-2 text-muted">
+                                        <div class="d-flex ">
+                                            <div class="like-count"><i class="far fa-thumbs-up"></i> </div>
+                                            <div class="ml-auto text-right" id="comment-count-{{post._id}}"></div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-0 mb-1 ">
+                                    <div class="d-flex post-react justify-content-around ">
+                                        <button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>
+                                        <button  data-toggle="collapse" data-target="#luan{{post._id}}"  class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>
+                                        <button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>
                                     </div>
                                 </div>
-                                <hr class="mt-0 mb-1 ">
-                                <div class="d-flex post-react justify-content-around ">
-                                    <button class="btn btn-light col-md-4"> <i class="far fa-thumbs-up"></i> Like </button>
-                                    <button  data-toggle="collapse" data-target="#luan{{post._id}}"  class="btn btn-light col-md-4"><i class="far fa-comment-alt"></i> Comment </button>
-                                    <button class="btn btn-light col-md-4"><i class="far fa-share-square"></i> Share </button>
-                                </div>
-                            </div>
-                            <div class="collapse" id="luan{{post._id}}">
-                                <div class="card card-body mb-0" >
-                                    <div class="pl-2 d-flex luan-comment">
-                                        <img class="avatar-comment mt-1 mr-2" src="/{{user.avatar}}" alt="">
-                                        <input type="text" name="comment" id="cmt{{post._id}}"  class="form-control rounded  col-lg-11 col-md-10 col-sm-8 mt-1" placeholder="Viết bình luận ...">
-                                        `<button type="button" id="luan-btn" data-user="{{user._id}}" data-id="{{post._id}}" onclick="sendComment(this)" class="btn btn-light"><i class="far fa-paper-plane"></i></button>
-                                    </div>
-                                    <div class="" id="luannt{{post._id}}">
+                                <div class="collapse" id="luan{{post._id}}">
+                                    <div class="card card-body mb-0" >
+                                        <div class="pl-2 d-flex luan-comment">
+                                            <img class="avatar-comment mt-1 mr-2" src="/{{user.avatar}}" alt="">
+                                            <input type="text" name="comment" id="cmt{{post._id}}"  class="form-control rounded  col-lg-11 col-md-10 col-sm-8 mt-1" placeholder="Viết bình luận ...">
+                                            `<button type="button" id="luan-btn" data-user="{{user._id}}" data-id="{{post._id}}" onclick="sendComment(this)" class="btn btn-light"><i class="far fa-paper-plane"></i></button>
+                                        </div>
+                                        <div class="" id="luannt{{post._id}}">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            {{/if}}
+                            {{#if message}}
+                                <h3>{{message}}</h3>
+                            {{/if}}
+                            
                         </div>
                     </div>
                 

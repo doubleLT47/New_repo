@@ -114,7 +114,6 @@ class Post {
             .then(() => {
                 commentModel.deleteMany({postID: req.params.id})
                 .then(() => {
-                    console.log('oke khoong')
                     if (req.user.level === 'admin') {
                         res.redirect('/admin/posts');
                     }
@@ -141,7 +140,7 @@ class Post {
                 var obj = {_id, caption, image, video, thematic, userID, createAt, userName, userAvatar};
                 res.render('detailPost', {user: user.toObject(), post: obj})
             })
-            .catch((err) => res.status(500).json({err: "Cannot find post"}))
+            .catch((err) => res.render('detailPost', {user: user.toObject(), message: 'Bài viết này đã không còn tồn lại'}))
     }
         
 }

@@ -47,7 +47,13 @@ class Comment {
 
     deleteOneComment(req, res, next) {
         commentModel.deleteOne({_id: req.params.id})
-            .then(() => res.json({message: `Đã xóa bình luận có ${req.params.id} thành công !`}))
+            .then(() => {
+                if (req.user.level === 'admin') {
+                    return res.redirect('/admin/comments');
+                }
+                res.json({message: `Đã xóa bình luận có ${req.params.id} thành công !`})
+                
+            })
             .catch((err)=> res.status(500).json({err: "Không thể xóa bình luận này"}));
     }
         
