@@ -3,17 +3,13 @@
     <div class="main-content">
         <div class="container-fluid">
             <!-- Breadcrumb Start -->
-            <div class="row" id="luan-notice" >
+            <div class="row" id="luan-notice" data-theme="{{theme}}";
                
             </div>
-            <!-- Breadcrumb End -->
         </div>
 
 
     </div>
-    <!-- Content Wrapper END -->
-
-    <!-- Footer START -->
     
 
 </div>
@@ -39,7 +35,9 @@
     })
 
     function getAllNotifications(page) {
-        const URL = `/notify/api?page=${page}`;
+        let theme = $('#luan-notice').data('theme');
+        console.log(theme);
+        const URL = `/notify/api/${theme}?page=${page}`;
         $.ajax({
             url: URL,
             method: "GET",

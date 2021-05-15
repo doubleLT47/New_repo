@@ -57,7 +57,6 @@ io.on('connection', function(socket) {
   });
 
   socket.on('notice-to-server', (data)=> {
-    console.log('abs' + data.userName, data.newId)
     io.emit('notice-to-user', {userName: data.userName, id: data.newId});
   })
 })

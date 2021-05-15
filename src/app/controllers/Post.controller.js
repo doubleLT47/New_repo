@@ -6,7 +6,7 @@ const notificationModel = require('../model/notifications');
 const fs = require('fs-extra');
 
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 const DIR = 'src/public/';
 
 class Post {

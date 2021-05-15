@@ -3400,13 +3400,14 @@ border-radius: 10px;
 .announce-body{
 
   display: -webkit-box;
--webkit-line-clamp: 2;
--webkit-box-orient: vertical;
-overflow: hidden;
-text-overflow: ellipsis;
-width: 95%;
-color: rgb(119, 118, 118);
-font-size: 14px; 
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 95%;
+  height: 50px!important;
+  color: rgb(119, 118, 118);
+  font-size: 14px; 
 }
 .luan-post-img {
   max-width: 100%;

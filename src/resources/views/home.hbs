@@ -52,73 +52,7 @@
                                 <a href="/notify/all" style="text-decoration-line: underline " class="ml-2 font-weight-bold text-warning">Xem tất cả</a>
                         </div>
                         <hr style="width: 90%;" class=" mt-0 mb-2">
-                  
-                        <li class="announce-detail mb-2">
-                                <div class="d-flex flex-row ml-2 announce-faculty">
-                                    <span> [  Phòng đại học ]  </span>
-                                    <span class="ml-2"> - </span>
-                                    <span class="ml-2"> 03-02-2021 </span>
-                                </div>
-                                 <a class="announce-title ml-2">
-                                        Thông báo các môn mở trong học kì hè 2020 -2021
-                                </a>
-
-                                 <div class="announce-body ml-2">
-                                        Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
-                                </div>
-                    
-                        </li>
-
-                        <li class="announce-detail mb-2">
-                                <div class="d-flex flex-row ml-2 announce-faculty">
-                                    <span> [  Phòng đại học ]  </span>
-                                    <span class="ml-2"> - </span>
-                                    <span class="ml-2"> 03-02-2021 </span>
-                                </div>
-                                 <a class="announce-title ml-2">
-                                        Thông báo các môn mở trong học kì hè 2020 -2021
-                                </a>
-
-                                 <div class="announce-body ml-2">
-                                        Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
-                                </div>
-                    
-                        </li>
-
-                         <li class="announce-detail mb-2">
-                                <div class="d-flex flex-row ml-2 announce-faculty">
-                                    <span> [  Phòng đại học ]  </span>
-                                    <span class="ml-2"> - </span>
-                                    <span class="ml-2"> 03-02-2021 </span>
-                                </div>
-                                 <a class="announce-title ml-2">
-                                        Thông báo các môn mở trong học kì hè 2020 -2021
-                                </a>
-
-                                 <div class="announce-body ml-2">
-                                        Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
-                                </div>
-                    
-                        </li>
-
-                         <li class="announce-detail mb-2">
-                                <div class="d-flex flex-row ml-2 announce-faculty">
-                                    <span> [  Phòng đại học ]  </span>
-                                    <span class="ml-2"> - </span>
-                                    <span class="ml-2"> 03-02-2021 </span>
-                                </div>
-                                 <a class="announce-title ml-2">
-                                        Thông báo các môn mở trong học kì hè 2020 -2021
-                                </a>
-
-                                 <div class="announce-body ml-2">
-                                        Of course, being a pure CSS solution means that it's also a pretty complicated one, but it works cleanly and elegantly. I will assume that Javascript is out of the question because this is much easier to achieve (and arguably more degradable) with Javascript.
-                                </div>
-                    
-                        </li>
-
-                        
-                    
+                        <div id="luan-notice"></div>
                     </ul>
                    
                 </div>
@@ -259,13 +193,16 @@
         $('#notification-to-user').fadeTo(2000, 0)
         
         getPosts(1);
+        getNotifications(1)
 
         socket = io();
-        socket.on('connect', () => console.log("Kết nối thành công!"+socket.id))
-        socket.on('disconnect', () => console.log("Mất kết nối với server!"));
+        socket.on('connect', () => {})
+        socket.on('disconnect', () => {});
         socket.on('notice-to-user', (data)=> {
             console.log(data);
             notifications(data);
+            $("#luan-notice").empty();
+            getNotifications(1)
         })
     });
 
@@ -556,5 +493,33 @@
         setTimeout(()=> {
              $('#notification-to-user').fadeTo(2000, 0)
         }, 6000);
+    }
+    function getNotifications(page) {
+        const URL = `/notify/api?page=${page}`;
+        $.ajax({
+            url: URL,
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                if (data.length === 0) {
+                    disabledLoadMore = true;
+                }
+                renderNotification(data);
+            }
+        })
+    }
+    function renderNotification(notices) {
+        let html = '';
+        $.each(notices, function(index, notice) {
+            html += `<li class="announce-detail mb-2">`;
+                html += `<div class="d-flex flex-row ml-2 announce-faculty">`
+                    html += ` <span class="ml-2"> ${notice.createAt} </span>`
+                html += `</div>`
+                html +=`<a class="announce-title ml-2" href="/post/detail/${notice.postID}">${notice.userName}</a>`
+                html += `<div class="announce-body ml-2">${notice.hint}</div>`
+            html += `</li>`
+
+        })
+        $('#luan-notice').append(html);
     }
 </script>
